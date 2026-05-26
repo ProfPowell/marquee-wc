@@ -69,6 +69,29 @@ nav .spacer {
   flex: 1;
 }
 
+/* Theme-picker trigger button (matches the vanilla-breeze.com header pattern) */
+.vb-theme-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text, oklch(20% 0.02 250));
+  background: transparent;
+  border: 1px solid var(--color-border, oklch(85% 0.01 250));
+  border-radius: var(--radius-m, 0.5rem);
+}
+.vb-theme-trigger:hover {
+  color: var(--color-accent, var(--color-primary, oklch(55% 0.18 250)));
+  border-color: var(--color-accent, var(--color-primary, oklch(55% 0.18 250)));
+}
+.vb-theme-trigger svg {
+  display: block;
+}
+
 /* ─── Layout ─────────────────────────────────────────────────────────── */
 main {
   max-width: 64rem;
