@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/super-marquee.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SuperMarquee",
+          "members": [
+            {
+              "kind": "field",
+              "name": "direction",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "speed",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "behavior",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "playState",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "autofill",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "axis",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "isReverse",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "start"
+            },
+            {
+              "kind": "method",
+              "name": "stop"
+            },
+            {
+              "kind": "method",
+              "name": "toggle"
+            },
+            {
+              "kind": "method",
+              "name": "refresh"
+            },
+            {
+              "kind": "method",
+              "name": "_build"
+            },
+            {
+              "kind": "method",
+              "name": "_observe"
+            },
+            {
+              "kind": "method",
+              "name": "_clearClones"
+            },
+            {
+              "kind": "method",
+              "name": "_makeClone"
+            },
+            {
+              "kind": "method",
+              "name": "_update"
+            },
+            {
+              "kind": "method",
+              "name": "_resolveGapPx"
+            },
+            {
+              "kind": "method",
+              "name": "_dispatch",
+              "parameters": [
+                {
+                  "name": "name"
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "name": "name",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "marquee-start"
+            },
+            {
+              "name": "marquee-pause"
+            },
+            {
+              "description": "fires on each animation iteration",
+              "name": "marquee-cycle"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "direction",
+              "description": "left | right | up | down  (default: left)"
+            },
+            {
+              "name": "speed",
+              "description": "number, pixels per second  (default: 50)"
+            },
+            {
+              "name": "behavior",
+              "description": "loop | slide | alternate  (default: loop)"
+            },
+            {
+              "name": "gap",
+              "description": "CSS length between repeats  (default: 2rem)"
+            },
+            {
+              "name": "play-state",
+              "description": "running | paused"
+            },
+            {
+              "name": "pause-on-hover",
+              "description": "boolean; also pauses on focus-within"
+            },
+            {
+              "name": "fade",
+              "description": "boolean or length for edge mask"
+            },
+            {
+              "name": "autofill",
+              "description": "boolean (default true)"
+            },
+            {
+              "name": "reduced-motion",
+              "description": "respect | ignore  (default: respect)"
+            },
+            {
+              "name": "theme",
+              "description": "ticker | breaking-news | code-block | screen-saver | credits"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "super-marquee",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "super-marquee",
+          "declaration": {
+            "name": "SuperMarquee",
+            "module": "src/super-marquee.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "SuperMarquee",
+          "declaration": {
+            "name": "SuperMarquee",
+            "module": "src/super-marquee.js"
+          }
+        }
+      ]
+    }
+  ]
+}

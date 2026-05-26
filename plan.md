@@ -1,4 +1,4 @@
-This <marquee-wc> component is a marquee tag reborn for the year 2026. 
+This <marquee-wc> component is a marquee tag reborn for the year 2026.
 
 It is accessible
 It uses CSS where possible a standard <marquee> could but uses CSS vars for styling
