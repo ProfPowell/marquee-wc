@@ -203,7 +203,10 @@
 
       <section>
         <h2>6. <code>mode="screen-saver"</code> + <code>behavior="alternate"</code></h2>
-        <p>Bouncing DVD-logo energy. Alternate behavior with easing.</p>
+        <p>
+          Bouncing DVD-logo energy. <code>alternate</code> bounces the text edge-to-edge across the
+          viewport with easing.
+        </p>
         <div class="demo">
           <marquee-wc mode="screen-saver" behavior="alternate" speed="80">HELLO WORLD</marquee-wc>
         </div>
@@ -321,6 +324,34 @@
         <div class="demo">
           <marquee-wc mode="pop" speed="60" pause-on-hover
             >boom · pow · bang · zap · kapow</marquee-wc
+          >
+        </div>
+
+        <h3><code>mode="spin"</code> — letters cartwheel</h3>
+        <div class="demo">
+          <marquee-wc mode="spin" speed="60" pause-on-hover>round and round we go</marquee-wc>
+        </div>
+
+        <h3><code>mode="flip"</code> — split-flap board</h3>
+        <div class="demo">
+          <marquee-wc mode="flip" speed="60" pause-on-hover>DEPARTURES — now flipping</marquee-wc>
+        </div>
+
+        <h3><code>mode="rainbow"</code> — a flowing spectrum</h3>
+        <div class="demo">
+          <marquee-wc
+            mode="rainbow"
+            speed="60"
+            pause-on-hover
+            style="font-size: 2rem; font-weight: 800"
+            >taste the rainbow ★ taste the rainbow ★</marquee-wc
+          >
+        </div>
+
+        <h3><code>mode="glitch"</code> — chromatic jitter</h3>
+        <div class="demo">
+          <marquee-wc mode="glitch" speed="60" pause-on-hover
+            >s y s t e m _ f a i l u r e</marquee-wc
           >
         </div>
       </section>

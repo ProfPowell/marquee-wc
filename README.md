@@ -84,14 +84,18 @@ These split the text into per-character spans and animate each letter with a
 staggered delay, so the effect ripples across the words. They compose with
 scrolling and honor `prefers-reduced-motion`.
 
-| Mode     | Description                                                  |
-| -------- | ------------------------------------------------------------ |
-| `bounce` | Letters hop up and back down                                 |
-| `wave`   | Roller-coaster: letters ride a tall sinusoidal wave          |
-| `march`  | Letters step up and down like a marching band                |
-| `pulse`  | Letters grow and shrink in a travelling swell                |
-| `ransom` | Cut-out magazine letters — random font, tilt, and chip color |
-| `pop`    | Letters balloon and burst at random, like little explosions  |
+| Mode      | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| `bounce`  | Letters hop up and back down                                 |
+| `wave`    | Roller-coaster: letters ride a tall sinusoidal wave          |
+| `march`   | Letters step up and down like a marching band                |
+| `pulse`   | Letters grow and shrink in a travelling swell                |
+| `ransom`  | Cut-out magazine letters — random font, tilt, and chip color |
+| `pop`     | Letters balloon and burst at random, like little explosions  |
+| `spin`    | Letters cartwheel around in a rolling stagger                |
+| `rainbow` | A flowing spectrum that ripples across the letters           |
+| `flip`    | Split-flap board — letters tumble on the X axis              |
+| `glitch`  | Jittery skew with a chromatic-aberration shadow              |
 
 ## API
 

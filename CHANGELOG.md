@@ -4,6 +4,17 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-05-26
+
+### Fixed
+
+- **`behavior="alternate"` now works for content narrower than the viewport.** Previously the scroll distance clamped to zero (no motion), so `mode="screen-saver"` + `behavior="alternate"` sat still. It now bounces the content edge-to-edge across the viewport; long content still slides to reveal its end. (Implemented via a signed `--marquee-alternate-distance`.)
+
+### Added
+
+- **Four more letter-motion modes:** `spin` (cartwheeling letters), `rainbow` (a flowing spectrum that ripples across the text), `flip` (split-flap board), and `glitch` (chromatic jitter).
+- Demos for each, plus a fixed/clarified `screen-saver` + `alternate` demo.
+
 ## [1.2.0] — 2026-05-26
 
 ### Added
