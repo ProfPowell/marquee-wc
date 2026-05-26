@@ -16,7 +16,7 @@
  * @attr reduced-motion - respect | ignore  (default: respect)
  * @attr mode - visual/motion preset. Surface themes: ticker | breaking-news |
  *   code-block | screen-saver | credits | dot-matrix. Per-letter motion:
- *   bounce | wave | march | pulse | ransom | pop.
+ *   bounce | wave | march | pulse | ransom | pop | spin | rainbow | flip | glitch.
  *
  * @fires marquee-start
  * @fires marquee-pause
@@ -24,7 +24,18 @@
  */
 
 // Modes that split text into per-character spans for letter-level effects.
-const LETTER_MODES = ['bounce', 'wave', 'march', 'pulse', 'ransom', 'pop'];
+const LETTER_MODES = [
+  'bounce',
+  'wave',
+  'march',
+  'pulse',
+  'ransom',
+  'pop',
+  'spin',
+  'rainbow',
+  'flip',
+  'glitch',
+];
 
 class MarqueeWc extends HTMLElement {
   static get observedAttributes() {
@@ -279,10 +290,16 @@ class MarqueeWc extends HTMLElement {
 
     // Compute scroll distance and duration for constant velocity
     let scrollDistance;
+    let alternateEnd = 0; // signed end-translation for the alternate bounce
     if (this.behavior === 'loop') {
       scrollDistance = itemSize + gapPx; // one cycle = one item
     } else if (this.behavior === 'alternate') {
-      scrollDistance = Math.max(0, itemSize - viewportSize);
+      // Bounce edge-to-edge. Long content slides left to reveal its end;
+      // short content travels right across the empty viewport. Either way the
+      // distance is the size difference, and the end translation is signed.
+      const overflow = itemSize - viewportSize;
+      scrollDistance = Math.abs(overflow);
+      alternateEnd = -overflow;
     } else {
       // slide
       scrollDistance = itemSize;
@@ -294,6 +311,7 @@ class MarqueeWc extends HTMLElement {
     this.style.setProperty('--marquee-gap', this.gap);
     this.style.setProperty('--marquee-item-size', `${itemSize}px`);
     this.style.setProperty('--marquee-cycle-distance', `${scrollDistance}px`);
+    this.style.setProperty('--marquee-alternate-distance', `${alternateEnd}px`);
     this.style.setProperty('--marquee-viewport-size', `${viewportSize}px`);
   }
 

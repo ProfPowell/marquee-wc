@@ -27,7 +27,11 @@ export type MarqueeMode =
   | 'march'
   | 'pulse'
   | 'ransom'
-  | 'pop';
+  | 'pop'
+  | 'spin'
+  | 'rainbow'
+  | 'flip'
+  | 'glitch';
 
 export interface MarqueeWcEventMap {
   'marquee-start': CustomEvent<void>;

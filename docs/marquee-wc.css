@@ -32,6 +32,7 @@ marquee-wc {
   --marquee-fade-size: 3rem;
   --marquee-duration: 20s;
   --marquee-cycle-distance: 100%;
+  --marquee-alternate-distance: 0px;
 }
 
 /* Unupgraded fallback: render content statically, no animation */
@@ -136,7 +137,7 @@ marquee-wc[data-axis='y'] .marquee-item {
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(calc(-1 * var(--marquee-cycle-distance)), 0, 0);
+    transform: translate3d(var(--marquee-alternate-distance, 0px), 0, 0);
   }
 }
 
@@ -145,7 +146,7 @@ marquee-wc[data-axis='y'] .marquee-item {
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(0, calc(-1 * var(--marquee-cycle-distance)), 0);
+    transform: translate3d(0, var(--marquee-alternate-distance, 0px), 0);
   }
 }
 
@@ -448,6 +449,75 @@ marquee-wc[mode='pop'] .marquee-char {
   }
   84% {
     transform: scale(0.9) rotate(2deg);
+  }
+}
+
+/* spin — letters cartwheel around, in a rolling stagger */
+marquee-wc[mode='spin'] .marquee-char {
+  display: inline-block;
+  animation: marquee-wc-spin 1.2s linear infinite;
+  animation-delay: calc(var(--i, 0) * 0.08s);
+}
+@keyframes marquee-wc-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* flip — split-flap board: letters tumble forward on the X axis */
+marquee-wc[mode='flip'] {
+  perspective: 600px;
+}
+marquee-wc[mode='flip'] .marquee-char {
+  display: inline-block;
+  animation: marquee-wc-flip 1.5s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.1s);
+}
+@keyframes marquee-wc-flip {
+  0%,
+  100% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(1turn);
+  }
+}
+
+/* rainbow — a flowing spectrum that ripples across the letters */
+marquee-wc[mode='rainbow'] .marquee-char {
+  display: inline-block;
+  color: hsl(calc(var(--i, 0) * 28deg) 95% 55%);
+  animation: marquee-wc-rainbow 1.6s linear infinite;
+  animation-delay: calc(var(--i, 0) * -0.05s);
+}
+@keyframes marquee-wc-rainbow {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* glitch — jittery skew with a chromatic-aberration shadow */
+marquee-wc[mode='glitch'] .marquee-char {
+  display: inline-block;
+  text-shadow:
+    0.03em 0 oklch(60% 0.24 25 / 0.7),
+    -0.03em 0 oklch(70% 0.18 220 / 0.7);
+  animation: marquee-wc-glitch 0.5s steps(2, jump-none) infinite;
+  animation-delay: calc(var(--i, 0) * -0.07s);
+}
+@keyframes marquee-wc-glitch {
+  0%,
+  100% {
+    transform: translate(0, 0) skewX(0deg);
+  }
+  25% {
+    transform: translate(0.04em, -0.05em) skewX(-9deg);
+  }
+  50% {
+    transform: translate(-0.05em, 0.03em) skewX(7deg);
+  }
+  75% {
+    transform: translate(0.03em, 0.04em) skewX(-3deg);
   }
 }
 
