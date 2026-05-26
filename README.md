@@ -49,28 +49,47 @@ page (link the CSS, or `import '@profpowell/marquee-wc/style.css'` in a bundler)
 
 ## Attributes
 
-| Attribute        | Type    | Default   | Description                                                                |
-| ---------------- | ------- | --------- | -------------------------------------------------------------------------- |
-| `direction`      | string  | `left`    | `left` \| `right` \| `up` \| `down`                                        |
-| `speed`          | number  | `50`      | Pixels per second                                                          |
-| `behavior`       | string  | `loop`    | `loop` \| `slide` \| `alternate`                                           |
-| `gap`            | length  | `2rem`    | CSS length between repeats                                                 |
-| `pause-on-hover` | boolean | —         | Also pauses on `:focus-within`                                             |
-| `play-state`     | string  | `running` | `running` \| `paused`                                                      |
-| `autofill`       | boolean | `true`    | Clone short content to fill the viewport (`false` to opt out)              |
-| `fade`           | boolean | —         | Apply an edge fade mask                                                    |
-| `reduced-motion` | string  | `respect` | `respect` \| `ignore`                                                      |
-| `theme`          | string  | —         | `ticker` \| `breaking-news` \| `code-block` \| `screen-saver` \| `credits` |
+| Attribute        | Type    | Default   | Description                                                   |
+| ---------------- | ------- | --------- | ------------------------------------------------------------- |
+| `direction`      | string  | `left`    | `left` \| `right` \| `up` \| `down`                           |
+| `speed`          | number  | `50`      | Pixels per second                                             |
+| `behavior`       | string  | `loop`    | `loop` \| `slide` \| `alternate`                              |
+| `gap`            | length  | `2rem`    | CSS length between repeats                                    |
+| `pause-on-hover` | boolean | —         | Also pauses on `:focus-within`                                |
+| `play-state`     | string  | `running` | `running` \| `paused`                                         |
+| `autofill`       | boolean | `true`    | Clone short content to fill the viewport (`false` to opt out) |
+| `fade`           | boolean | —         | Apply an edge fade mask                                       |
+| `reduced-motion` | string  | `respect` | `respect` \| `ignore`                                         |
+| `mode`           | string  | —         | A visual/motion preset (see Modes below)                      |
 
-## Themes
+## Modes
 
-| Theme           | Description                                                        |
+The `mode` attribute selects a preset. **Surface themes** style the container;
+**letter-motion modes** animate each character.
+
+### Surface themes
+
+| Mode            | Description                                                        |
 | --------------- | ------------------------------------------------------------------ |
 | `ticker`        | Compact monospace stock-ticker with dot separators and fade edges  |
 | `breaking-news` | Bold colored bar with a label set via `--marquee-label`            |
 | `code-block`    | Monospace surface for long lines of code, logs, or terminal output |
 | `screen-saver`  | Big glowing text — pair with `behavior="alternate"`                |
 | `credits`       | Vertical movie-credit roll — pair with `direction="up"`            |
+
+### Letter-motion modes
+
+These split the text into per-character spans and animate each letter with a
+staggered delay, so the effect ripples across the words. They compose with
+scrolling and honor `prefers-reduced-motion`.
+
+| Mode     | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| `bounce` | Letters hop up and back down                                 |
+| `wave`   | Roller-coaster: letters ride a tall sinusoidal wave          |
+| `march`  | Letters step up and down like a marching band                |
+| `pulse`  | Letters grow and shrink in a travelling swell                |
+| `ransom` | Cut-out magazine letters — random font, tilt, and chip color |
 
 ## API
 
@@ -87,6 +106,7 @@ el.speed; // number  (readonly)
 el.behavior; // 'loop' | 'slide' | 'alternate'  (readonly)
 el.playState; // 'running' | 'paused'  (readonly)
 el.axis; // 'x' | 'y'  (readonly, derived)
+el.mode; // active mode preset, e.g. 'ticker' | 'bounce' | ''  (readonly)
 ```
 
 Set attributes to change configuration (`el.setAttribute('speed', '120')`); the
@@ -128,7 +148,7 @@ automatically:
 
 ```html
 <html data-theme="…">
-  <marquee-wc theme="ticker">Reads --color-surface, --color-text, --font-mono</marquee-wc>
+  <marquee-wc mode="ticker">Reads --color-surface, --color-text, --font-mono</marquee-wc>
 </html>
 ```
 

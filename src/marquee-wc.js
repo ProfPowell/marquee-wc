@@ -14,12 +14,18 @@
  * @attr autofill - boolean (default true)
  * @attr fade - boolean or length for edge mask
  * @attr reduced-motion - respect | ignore  (default: respect)
- * @attr theme - ticker | breaking-news | code-block | screen-saver | credits
+ * @attr mode - visual/motion preset. Surface themes: ticker | breaking-news |
+ *   code-block | screen-saver | credits. Per-letter motion: bounce | wave |
+ *   march | pulse | ransom.
  *
  * @fires marquee-start
  * @fires marquee-pause
  * @fires marquee-cycle - fires on each animation iteration
  */
+
+// Modes that split text into per-character spans for letter-level effects.
+const LETTER_MODES = ['bounce', 'wave', 'march', 'pulse', 'ransom'];
+
 class MarqueeWc extends HTMLElement {
   static get observedAttributes() {
     return [
@@ -32,7 +38,7 @@ class MarqueeWc extends HTMLElement {
       'fade',
       'autofill',
       'reduced-motion',
-      'theme',
+      'mode',
     ];
   }
 
@@ -54,6 +60,9 @@ class MarqueeWc extends HTMLElement {
   }
   get autofill() {
     return this.getAttribute('autofill') !== 'false';
+  }
+  get mode() {
+    return this.getAttribute('mode') || '';
   }
   get axis() {
     return ['up', 'down'].includes(this.direction) ? 'y' : 'x';
@@ -81,6 +90,7 @@ class MarqueeWc extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue === newValue || !this._built) return;
+    if (name === 'mode') this._renderContent();
     this._update();
     if (name === 'play-state') {
       this._dispatch(newValue === 'paused' ? 'marquee-pause' : 'marquee-start');
@@ -123,6 +133,68 @@ class MarqueeWc extends HTMLElement {
     this._original = original;
     this._track = track;
     this._viewport = viewport;
+
+    // Snapshot the authored markup so we can re-render when `mode` changes.
+    this._sourceHTML = original.innerHTML;
+    this._renderContent();
+  }
+
+  // Restore authored markup, then split into letters if the mode needs it.
+  _renderContent() {
+    if (this._sourceHTML == null) return;
+    this._original.innerHTML = this._sourceHTML;
+    if (LETTER_MODES.includes(this.mode)) this._splitLetters();
+  }
+
+  // Wrap each character in a <span class="marquee-char"> with a stagger index,
+  // so CSS can animate letters individually (bounce, wave, march, pulse, ransom).
+  _splitLetters() {
+    const walker = document.createTreeWalker(this._original, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+    const ransom = this.mode === 'ransom';
+    let i = 0;
+    for (const node of textNodes) {
+      const frag = document.createDocumentFragment();
+      for (const ch of node.textContent) {
+        const span = document.createElement('span');
+        span.className = 'marquee-char';
+        span.style.setProperty('--i', i++);
+        if (ch === ' ' || ch === '\n' || ch === '\t') {
+          span.classList.add('marquee-space');
+          span.textContent = ' ';
+        } else {
+          span.textContent = ch;
+          if (ransom) this._ransomize(span);
+        }
+        frag.appendChild(span);
+      }
+      node.replaceWith(frag);
+    }
+    this._original.style.setProperty('--n', i);
+  }
+
+  // Give a single ransom-note letter a random font, tilt, scale, and chip color.
+  _ransomize(span) {
+    const fonts = [
+      'var(--font-serif, Georgia, serif)',
+      'var(--font-mono, ui-monospace, monospace)',
+      'var(--font-sans, system-ui, sans-serif)',
+      '"Comic Sans MS", "Marker Felt", cursive',
+    ];
+    const chips = [
+      'var(--color-accent, oklch(55% 0.18 250))',
+      'var(--color-primary, oklch(55% 0.18 250))',
+      'var(--color-error, oklch(60% 0.2 25))',
+      'var(--color-warning, oklch(75% 0.15 80))',
+      'var(--color-success, oklch(65% 0.18 145))',
+    ];
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    span.style.fontFamily = pick(fonts);
+    span.style.setProperty('--rot', `${(Math.random() * 16 - 8).toFixed(1)}deg`);
+    span.style.setProperty('--scale', (0.85 + Math.random() * 0.55).toFixed(2));
+    span.style.setProperty('--chip', pick(chips));
   }
 
   _observe() {

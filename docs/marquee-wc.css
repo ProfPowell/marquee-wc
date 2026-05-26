@@ -181,13 +181,13 @@ marquee-wc[data-direction='reverse'][data-behavior='alternate'] .marquee-track {
 
 /* ─── Pause states ───────────────────────────────────────────────────── */
 
-marquee-wc[data-state='paused'] .marquee-track,
-marquee-wc[data-visible='false'] .marquee-track,
-marquee-wc[data-tab-visible='false'] .marquee-track {
+marquee-wc[data-state='paused'] :is(.marquee-track, .marquee-char),
+marquee-wc[data-visible='false'] :is(.marquee-track, .marquee-char),
+marquee-wc[data-tab-visible='false'] :is(.marquee-track, .marquee-char) {
   animation-play-state: paused;
 }
 
-marquee-wc[pause-on-hover]:where(:hover, :focus-within) .marquee-track {
+marquee-wc[pause-on-hover]:where(:hover, :focus-within) :is(.marquee-track, .marquee-char) {
   animation-play-state: paused;
 }
 
@@ -198,11 +198,15 @@ marquee-wc[pause-on-hover]:where(:hover, :focus-within) .marquee-track {
     animation: none;
     transform: none;
   }
+  /* Letters stop animating but keep any static styling (e.g. ransom tilt). */
+  marquee-wc:not([reduced-motion='ignore']) .marquee-char {
+    animation: none;
+  }
 }
 
 /* ─── Theme: ticker (compact, monospace, fade edges) ─────────────────── */
 
-marquee-wc[theme='ticker'] {
+marquee-wc[mode='ticker'] {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.9rem;
   padding-block: 0.5rem;
@@ -218,7 +222,7 @@ marquee-wc[theme='ticker'] {
     transparent 100%
   );
 }
-marquee-wc[theme='ticker'] .marquee-item::after {
+marquee-wc[mode='ticker'] .marquee-item::after {
   content: ' •';
   opacity: 0.4;
   margin-inline-start: 1rem;
@@ -226,7 +230,7 @@ marquee-wc[theme='ticker'] .marquee-item::after {
 
 /* ─── Theme: breaking-news (red bar + label) ─────────────────────────── */
 
-marquee-wc[theme='breaking-news'] {
+marquee-wc[mode='breaking-news'] {
   display: flex;
   align-items: stretch;
   background: var(--marquee-bg, var(--color-error, oklch(50% 0.22 25)));
@@ -235,7 +239,7 @@ marquee-wc[theme='breaking-news'] {
   font-weight: 600;
   --marquee-gap: 4rem;
 }
-marquee-wc[theme='breaking-news']::before {
+marquee-wc[mode='breaking-news']::before {
   content: var(--marquee-label, 'BREAKING');
   flex-shrink: 0;
   padding: 0.75rem 1rem;
@@ -245,13 +249,13 @@ marquee-wc[theme='breaking-news']::before {
   text-transform: uppercase;
   align-content: center;
 }
-marquee-wc[theme='breaking-news'] .marquee-viewport {
+marquee-wc[mode='breaking-news'] .marquee-viewport {
   padding-block: 0.75rem;
 }
 
 /* ─── Theme: code-block (monospace, syntax-friendly) ─────────────────── */
 
-marquee-wc[theme='code-block'] {
+marquee-wc[mode='code-block'] {
   font-family: var(--font-mono, ui-monospace, monospace);
   background: var(
     --marquee-bg,
@@ -264,13 +268,13 @@ marquee-wc[theme='code-block'] {
   font-size: 0.9rem;
   line-height: 1.5;
 }
-marquee-wc[theme='code-block'] .marquee-item {
+marquee-wc[mode='code-block'] .marquee-item {
   tab-size: 2;
 }
 
 /* ─── Theme: screen-saver (DVD-bouncing energy, big text, glow) ──────── */
 
-marquee-wc[theme='screen-saver'] {
+marquee-wc[mode='screen-saver'] {
   background: var(--marquee-bg, var(--color-background, oklch(15% 0.05 280)));
   color: var(--marquee-fg, var(--color-accent, var(--color-primary, oklch(80% 0.25 320))));
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
@@ -285,7 +289,7 @@ marquee-wc[theme='screen-saver'] {
 
 /* ─── Theme: credits (vertical movie-credit roll) ────────────────────── */
 
-marquee-wc[theme='credits'] {
+marquee-wc[mode='credits'] {
   background: var(--marquee-bg, black);
   color: var(--marquee-fg, white);
   font-family: var(--font-serif, ui-serif, Georgia, serif);
@@ -301,7 +305,7 @@ marquee-wc[theme='credits'] {
     transparent 100%
   );
 }
-marquee-wc[theme='credits'] .marquee-item {
+marquee-wc[mode='credits'] .marquee-item {
   white-space: normal;
   padding-inline: 2rem;
   line-height: 1.6;
@@ -311,4 +315,114 @@ marquee-wc[theme='credits'] .marquee-item {
 
 marquee-wc[pause-on-hover] {
   cursor: default;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Per-letter motion modes
+ *
+ * For mode="bounce|wave|march|pulse|ransom" the component wraps every
+ * character in <span class="marquee-char" style="--i:N">. The --i index
+ * staggers each letter's animation so the effect ripples across the text.
+ * Transforms don't affect layout, so constant-velocity scrolling is unaffected.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+marquee-wc[mode='bounce'] .marquee-char,
+marquee-wc[mode='wave'] .marquee-char,
+marquee-wc[mode='march'] .marquee-char,
+marquee-wc[mode='pulse'] .marquee-char {
+  display: inline-block;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--i, 0) * var(--marquee-char-stagger, 0.06s));
+  will-change: transform;
+}
+
+/* bounce — letters hop up and back down */
+marquee-wc[mode='bounce'] .marquee-char {
+  animation-name: marquee-wc-bounce;
+  animation-duration: 0.9s;
+  animation-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+}
+@keyframes marquee-wc-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-0.55em);
+  }
+}
+
+/* wave — roller-coaster: a tall sinusoidal ride with a little banking */
+marquee-wc[mode='wave'] .marquee-char {
+  animation-name: marquee-wc-wave;
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in-out;
+  --marquee-char-stagger: 0.08s;
+}
+@keyframes marquee-wc-wave {
+  0%,
+  100% {
+    transform: translateY(0.5em) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-0.5em) rotate(-8deg);
+  }
+}
+
+/* march — stepped up/down, like a marching band */
+marquee-wc[mode='march'] .marquee-char {
+  animation-name: marquee-wc-march;
+  animation-duration: 0.6s;
+  animation-timing-function: steps(1, jump-none);
+  --marquee-char-stagger: 0.09s;
+}
+@keyframes marquee-wc-march {
+  0% {
+    transform: translateY(-0.3em);
+  }
+  50% {
+    transform: translateY(0.3em);
+  }
+  100% {
+    transform: translateY(-0.3em);
+  }
+}
+
+/* pulse — letters grow and shrink in a travelling swell */
+marquee-wc[mode='pulse'] .marquee-char {
+  animation-name: marquee-wc-pulse;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  --marquee-char-stagger: 0.07s;
+}
+@keyframes marquee-wc-pulse {
+  0%,
+  100% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1.45);
+  }
+}
+
+/* ransom — cut-out magazine letters: random font, tilt, scale, colored chip */
+marquee-wc[mode='ransom'] {
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-weight: 700;
+  padding-block: 0.5rem;
+}
+marquee-wc[mode='ransom'] .marquee-char {
+  display: inline-block;
+  margin-inline: 0.05em;
+  padding: 0.06em 0.2em;
+  border-radius: 0.14em;
+  background: var(--chip, var(--color-accent, oklch(55% 0.18 250)));
+  color: oklch(98% 0 0);
+  transform: rotate(var(--rot, 0deg)) scale(var(--scale, 1));
+  box-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+}
+marquee-wc[mode='ransom'] .marquee-space {
+  background: none;
+  box-shadow: none;
+  padding-inline: 0;
 }

@@ -81,10 +81,10 @@
       </section>
 
       <section>
-        <h2>2. <code>theme="ticker"</code></h2>
+        <h2>2. <code>mode="ticker"</code></h2>
         <p>Stock ticker. Monospace, fade edges, dot separators, pause-on-hover.</p>
         <div class="demo">
-          <marquee-wc theme="ticker" speed="80" pause-on-hover fade>
+          <marquee-wc mode="ticker" speed="80" pause-on-hover fade>
             <span class="stock">AAPL <span class="stock-up">▲ 178.42 (+1.2%)</span></span>
             <span class="stock">MSFT <span class="stock-up">▲ 412.18 (+0.4%)</span></span>
             <span class="stock">GOOG <span class="stock-down">▼ 138.21 (−0.8%)</span></span>
@@ -96,10 +96,10 @@
       </section>
 
       <section>
-        <h2>3. <code>theme="breaking-news"</code></h2>
+        <h2>3. <code>mode="breaking-news"</code></h2>
         <p>Bold bar with a label set via <code>--marquee-label</code> in CSS.</p>
         <div class="demo">
-          <marquee-wc theme="breaking-news" speed="60" pause-on-hover>
+          <marquee-wc mode="breaking-news" speed="60" pause-on-hover>
             Web standards adopt <code>&lt;marquee-wc&gt;</code> as a new HTML element. All major
             browsers ship in 2026. Developers rejoice. The 90s are back.
           </marquee-wc>
@@ -176,10 +176,10 @@
       </section>
 
       <section>
-        <h2>5. <code>theme="code-block"</code> — long-line tickers</h2>
+        <h2>5. <code>mode="code-block"</code> — long-line tickers</h2>
         <p>Useful for terminal output, build logs, or a long line of code that won't wrap.</p>
         <div class="demo">
-          <marquee-wc theme="code-block" speed="50" pause-on-hover>
+          <marquee-wc mode="code-block" speed="50" pause-on-hover>
             $ cloudflare deploy --env production --branch main --route vanilla-breeze.com/* --vars
             KV_NAMESPACE=breeze_v2,API_TOKEN=*** --compatibility-date=2026-05-22
           </marquee-wc>
@@ -187,18 +187,18 @@
       </section>
 
       <section>
-        <h2>6. <code>theme="screen-saver"</code> + <code>behavior="alternate"</code></h2>
+        <h2>6. <code>mode="screen-saver"</code> + <code>behavior="alternate"</code></h2>
         <p>Bouncing DVD-logo energy. Alternate behavior with easing.</p>
         <div class="demo">
-          <marquee-wc theme="screen-saver" behavior="alternate" speed="80">HELLO WORLD</marquee-wc>
+          <marquee-wc mode="screen-saver" behavior="alternate" speed="80">HELLO WORLD</marquee-wc>
         </div>
       </section>
 
       <section>
-        <h2>7. <code>theme="credits"</code> — vertical credit roll</h2>
+        <h2>7. <code>mode="credits"</code> — vertical credit roll</h2>
         <p><code>direction="up"</code>, slow speed, vertical fade.</p>
         <div class="demo">
-          <marquee-wc theme="credits" direction="up" speed="30" pause-on-hover>
+          <marquee-wc mode="credits" direction="up" speed="30" pause-on-hover>
             <div>
               <p><strong>VANILLA BREEZE</strong></p>
               <p>A platform-first framework</p>
@@ -260,6 +260,46 @@
               <p>Item down 5</p>
             </div>
           </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>10. Letter-motion modes</h2>
+        <p>
+          These modes split the text into per-character spans and animate each letter with a
+          staggered delay, so the effect ripples across the words. They compose with scrolling — the
+          letters dance while the marquee rolls.
+        </p>
+
+        <h3><code>mode="bounce"</code> — letters hop</h3>
+        <div class="demo">
+          <marquee-wc mode="bounce" speed="60" pause-on-hover
+            >It is 2026 — make it bounce!</marquee-wc
+          >
+        </div>
+
+        <h3><code>mode="wave"</code> — roller-coaster ride</h3>
+        <div class="demo">
+          <marquee-wc mode="wave" speed="60" pause-on-hover
+            >Up the hill and down the dip…</marquee-wc
+          >
+        </div>
+
+        <h3><code>mode="march"</code> — letters step up and down</h3>
+        <div class="demo">
+          <marquee-wc mode="march" speed="60" pause-on-hover
+            >Left, right, left — quick march!</marquee-wc
+          >
+        </div>
+
+        <h3><code>mode="pulse"</code> — letters grow and shrink</h3>
+        <div class="demo">
+          <marquee-wc mode="pulse" speed="60" pause-on-hover>Breathe in, breathe out…</marquee-wc>
+        </div>
+
+        <h3><code>mode="ransom"</code> — cut-out magazine letters</h3>
+        <div class="demo">
+          <marquee-wc mode="ransom" speed="50" pause-on-hover>pay no attention</marquee-wc>
         </div>
       </section>
     </main>

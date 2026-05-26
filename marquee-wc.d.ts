@@ -10,6 +10,23 @@ export type MarqueePlayState = 'running' | 'paused';
 export type MarqueeReducedMotion = 'respect' | 'ignore';
 export type MarqueeAxis = 'x' | 'y';
 
+/**
+ * Visual/motion preset. Surface themes style the container; letter modes
+ * (`bounce`, `wave`, `march`, `pulse`, `ransom`) animate each character.
+ */
+export type MarqueeMode =
+  | ''
+  | 'ticker'
+  | 'breaking-news'
+  | 'code-block'
+  | 'screen-saver'
+  | 'credits'
+  | 'bounce'
+  | 'wave'
+  | 'march'
+  | 'pulse'
+  | 'ransom';
+
 export interface MarqueeWcEventMap {
   'marquee-start': CustomEvent<void>;
   'marquee-pause': CustomEvent<void>;
@@ -35,6 +52,8 @@ export declare class MarqueeWc extends HTMLElement {
   get axis(): MarqueeAxis;
   /** Whether the resolved direction runs in reverse (`right` or `down`). */
   get isReverse(): boolean;
+  /** Active visual/motion preset. Attribute: `mode`. Default `''` (none). */
+  get mode(): MarqueeMode;
 
   /** Start the marquee (sets `play-state="running"`). */
   start(): void;

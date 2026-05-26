@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-05-26
+
+### Changed
+
+- **Renamed the `theme` attribute to `mode`** to avoid clashing with Vanilla Breeze page themes. The values (`ticker`, `breaking-news`, `code-block`, `screen-saver`, `credits`) are unchanged — only the attribute name changed (`theme="ticker"` → `mode="ticker"`).
+
+### Added
+
+- **Five letter-motion modes:** `bounce`, `wave` (roller-coaster), `march`, `pulse` (size change), and `ransom` (cut-out magazine letters). These split the text into per-character spans and animate each letter with a staggered delay; they compose with scrolling and honor `prefers-reduced-motion`.
+- `mode` getter and the `MarqueeMode` type in the TypeScript declarations.
+- Demos and API docs for all modes; a Playwright test for letter splitting.
+
 ## [1.0.0] — 2026-05-26
 
 ### Added

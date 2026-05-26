@@ -83,7 +83,7 @@
         </div>
 
         <div class="demo" style="margin-top: 2.5rem">
-          <marquee-wc theme="ticker" speed="80" pause-on-hover fade>
+          <marquee-wc mode="ticker" speed="80" pause-on-hover fade>
             <span class="stock">AAPL <span class="stock-up">▲ 178.42 (+1.2%)</span></span>
             <span class="stock">MSFT <span class="stock-up">▲ 412.18 (+0.4%)</span></span>
             <span class="stock">GOOG <span class="stock-down">▼ 138.21 (−0.8%)</span></span>
@@ -108,28 +108,28 @@
         </div>
 
         <h3>
-          <code>theme="ticker"</code> — reads <code>--color-surface</code> /
+          <code>mode="ticker"</code> — reads <code>--color-surface</code> /
           <code>--font-mono</code>
         </h3>
         <div class="demo">
-          <marquee-wc theme="ticker" speed="70" pause-on-hover fade>
+          <marquee-wc mode="ticker" speed="70" pause-on-hover fade>
             <span>Tokens flow downhill.</span>
             <span>Switch the theme and watch.</span>
             <span>One component, every palette.</span>
           </marquee-wc>
         </div>
 
-        <h3><code>theme="breaking-news"</code> — reads <code>--color-error</code></h3>
+        <h3><code>mode="breaking-news"</code> — reads <code>--color-error</code></h3>
         <div class="demo">
-          <marquee-wc theme="breaking-news" speed="60" pause-on-hover>
+          <marquee-wc mode="breaking-news" speed="60" pause-on-hover>
             The marquee adopts your theme automatically. No <code>--marquee-*</code> overrides
             required — but they still win if you set them.
           </marquee-wc>
         </div>
 
-        <h3><code>theme="code-block"</code> — reads the surface + mono tokens</h3>
+        <h3><code>mode="code-block"</code> — reads the surface + mono tokens</h3>
         <div class="demo">
-          <marquee-wc theme="code-block" speed="50" pause-on-hover>
+          <marquee-wc mode="code-block" speed="50" pause-on-hover>
             $ npm install @profpowell/marquee-wc &amp;&amp; echo "themed by vanilla-breeze" # try a
             dark mode in the picker ↗
           </marquee-wc>

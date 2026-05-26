@@ -132,16 +132,24 @@
               <td><code>respect</code> | <code>ignore</code></td>
             </tr>
             <tr>
-              <td><code>theme</code></td>
+              <td><code>mode</code></td>
               <td>string</td>
               <td>—</td>
               <td>
-                <code>ticker</code> | <code>breaking-news</code> | <code>code-block</code> |
-                <code>screen-saver</code> | <code>credits</code>
+                Surface themes: <code>ticker</code> | <code>breaking-news</code> |
+                <code>code-block</code> | <code>screen-saver</code> | <code>credits</code>. Letter
+                motion: <code>bounce</code> | <code>wave</code> | <code>march</code> |
+                <code>pulse</code> | <code>ransom</code>
               </td>
             </tr>
           </tbody>
         </table>
+        <p>
+          <strong>Letter-motion modes</strong> (<code>bounce</code>, <code>wave</code>,
+          <code>march</code>, <code>pulse</code>, <code>ransom</code>) split the text into
+          per-letter spans and animate each character with a staggered delay. They compose with
+          scrolling and honor <code>prefers-reduced-motion</code>.
+        </p>
       </section>
 
       <section id="methods">
@@ -254,7 +262,7 @@
         <table>
           <thead>
             <tr>
-              <th>Theme</th>
+              <th>Mode</th>
               <th>Vanilla Breeze tokens consumed</th>
             </tr>
           </thead>
