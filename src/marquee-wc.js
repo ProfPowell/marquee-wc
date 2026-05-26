@@ -16,7 +16,8 @@
  * @attr reduced-motion - respect | ignore  (default: respect)
  * @attr mode - visual/motion preset. Surface themes: ticker | breaking-news |
  *   code-block | screen-saver | credits | dot-matrix. Per-letter motion:
- *   bounce | wave | march | pulse | ransom | pop | spin | rainbow | flip | glitch.
+ *   bounce | wave | march | pulse | ransom | pop | spin | rainbow | flip |
+ *   glitch | leet | blink | chase.
  *
  * @fires marquee-start
  * @fires marquee-pause
@@ -35,6 +36,9 @@ const LETTER_MODES = [
   'rainbow',
   'flip',
   'glitch',
+  'leet',
+  'blink',
+  'chase',
 ];
 
 class MarqueeWc extends HTMLElement {
@@ -166,6 +170,8 @@ class MarqueeWc extends HTMLElement {
 
     const ransom = this.mode === 'ransom';
     const pop = this.mode === 'pop';
+    const leet = this.mode === 'leet';
+    const blink = this.mode === 'blink';
     let i = 0;
     for (const node of textNodes) {
       const frag = document.createDocumentFragment();
@@ -175,12 +181,18 @@ class MarqueeWc extends HTMLElement {
         span.style.setProperty('--i', i++);
         // pop fires letters at random times so the bursts scatter "here and there"
         if (pop) span.style.setProperty('--delay', `${(Math.random() * 2.6).toFixed(2)}s`);
+        // blink: each letter blinks independently at its own rate
+        if (blink) {
+          span.style.setProperty('--blink-rate', `${(0.4 + Math.random() * 1.5).toFixed(2)}s`);
+          span.style.setProperty('--blink-delay', `${Math.random().toFixed(2)}s`);
+        }
         if (ch === ' ' || ch === '\n' || ch === '\t') {
           span.classList.add('marquee-space');
           span.textContent = ' ';
         } else {
           span.textContent = ch;
           if (ransom) this._ransomize(span);
+          if (leet) this._leetify(span, ch);
         }
         frag.appendChild(span);
       }
@@ -209,6 +221,20 @@ class MarqueeWc extends HTMLElement {
     span.style.setProperty('--rot', `${(Math.random() * 16 - 8).toFixed(1)}deg`);
     span.style.setProperty('--scale', (0.85 + Math.random() * 0.55).toFixed(2));
     span.style.setProperty('--chip', pick(chips));
+  }
+
+  // Substitute a letter with its l33t equivalent and, at random, mirror it or
+  // flip it upside-down — for that glitchy h4x0r chaos.
+  _leetify(span, ch) {
+    const leet = { a: '4', b: '8', e: '3', g: '9', i: '1', l: '1', o: '0', s: '5', t: '7', z: '2' };
+    const sub = leet[ch.toLowerCase()];
+    if (sub) span.textContent = sub;
+    const r = Math.random();
+    if (r < 0.16)
+      span.style.setProperty('--flip', 'scaleX(-1)'); // reversed
+    else if (r < 0.27)
+      span.style.setProperty('--flip', 'scaleY(-1)'); // upside-down
+    else if (r < 0.35) span.style.setProperty('--flip', 'rotate(180deg)');
   }
 
   _observe() {
