@@ -1,4 +1,4 @@
-const l = [
+const d = [
   "bounce",
   "wave",
   "march",
@@ -8,9 +8,12 @@ const l = [
   "spin",
   "rainbow",
   "flip",
-  "glitch"
+  "glitch",
+  "leet",
+  "blink",
+  "chase"
 ];
-class c extends HTMLElement {
+class u extends HTMLElement {
   static get observedAttributes() {
     return [
       "direction",
@@ -85,30 +88,30 @@ class c extends HTMLElement {
     e.className = "marquee-viewport";
     const i = document.createElement("div");
     i.className = "marquee-track";
-    const r = document.createElement("div");
-    r.className = "marquee-item", t.forEach((o) => r.appendChild(o)), i.appendChild(r), e.appendChild(i), this.appendChild(e), this._original = r, this._track = i, this._viewport = e, this._sourceHTML = r.innerHTML, this._renderContent();
+    const s = document.createElement("div");
+    s.className = "marquee-item", t.forEach((r) => s.appendChild(r)), i.appendChild(s), e.appendChild(i), this.appendChild(e), this._original = s, this._track = i, this._viewport = e, this._sourceHTML = s.innerHTML, this._renderContent();
   }
   // Restore authored markup, then split into letters if the mode needs it.
   _renderContent() {
-    this._sourceHTML != null && (this._original.innerHTML = this._sourceHTML, l.includes(this.mode) && this._splitLetters());
+    this._sourceHTML != null && (this._original.innerHTML = this._sourceHTML, d.includes(this.mode) && this._splitLetters());
   }
   // Wrap each character in a <span class="marquee-char"> with a stagger index,
   // so CSS can animate letters individually (bounce, wave, march, pulse, ransom).
   _splitLetters() {
     const t = document.createTreeWalker(this._original, NodeFilter.SHOW_TEXT), e = [];
     for (; t.nextNode(); ) e.push(t.currentNode);
-    const i = this.mode === "ransom", r = this.mode === "pop";
-    let o = 0;
-    for (const a of e) {
-      const h = document.createDocumentFragment();
-      for (const n of a.textContent) {
-        const s = document.createElement("span");
-        s.className = "marquee-char", s.style.setProperty("--i", o++), r && s.style.setProperty("--delay", `${(Math.random() * 2.6).toFixed(2)}s`), n === " " || n === `
-` || n === "	" ? (s.classList.add("marquee-space"), s.textContent = " ") : (s.textContent = n, i && this._ransomize(s)), h.appendChild(s);
+    const i = this.mode === "ransom", s = this.mode === "pop", r = this.mode === "leet", n = this.mode === "blink";
+    let l = 0;
+    for (const c of e) {
+      const a = document.createDocumentFragment();
+      for (const h of c.textContent) {
+        const o = document.createElement("span");
+        o.className = "marquee-char", o.style.setProperty("--i", l++), s && o.style.setProperty("--delay", `${(Math.random() * 2.6).toFixed(2)}s`), n && (o.style.setProperty("--blink-rate", `${(0.4 + Math.random() * 1.5).toFixed(2)}s`), o.style.setProperty("--blink-delay", `${Math.random().toFixed(2)}s`)), h === " " || h === `
+` || h === "	" ? (o.classList.add("marquee-space"), o.textContent = " ") : (o.textContent = h, i && this._ransomize(o), r && this._leetify(o, h)), a.appendChild(o);
       }
-      a.replaceWith(h);
+      c.replaceWith(a);
     }
-    this._original.style.setProperty("--n", o);
+    this._original.style.setProperty("--n", l);
   }
   // Give a single ransom-note letter a random font, tilt, scale, and chip color.
   _ransomize(t) {
@@ -123,8 +126,16 @@ class c extends HTMLElement {
       "var(--color-error, oklch(60% 0.2 25))",
       "var(--color-warning, oklch(75% 0.15 80))",
       "var(--color-success, oklch(65% 0.18 145))"
-    ], r = (o) => o[Math.floor(Math.random() * o.length)];
-    t.style.fontFamily = r(e), t.style.setProperty("--rot", `${(Math.random() * 16 - 8).toFixed(1)}deg`), t.style.setProperty("--scale", (0.85 + Math.random() * 0.55).toFixed(2)), t.style.setProperty("--chip", r(i));
+    ], s = (r) => r[Math.floor(Math.random() * r.length)];
+    t.style.fontFamily = s(e), t.style.setProperty("--rot", `${(Math.random() * 16 - 8).toFixed(1)}deg`), t.style.setProperty("--scale", (0.85 + Math.random() * 0.55).toFixed(2)), t.style.setProperty("--chip", s(i));
+  }
+  // Substitute a letter with its l33t equivalent and, at random, mirror it or
+  // flip it upside-down — for that glitchy h4x0r chaos.
+  _leetify(t, e) {
+    const s = { a: "4", b: "8", e: "3", g: "9", i: "1", l: "1", o: "0", s: "5", t: "7", z: "2" }[e.toLowerCase()];
+    s && (t.textContent = s);
+    const r = Math.random();
+    r < 0.16 ? t.style.setProperty("--flip", "scaleX(-1)") : r < 0.27 ? t.style.setProperty("--flip", "scaleY(-1)") : r < 0.35 && t.style.setProperty("--flip", "rotate(180deg)");
   }
   _observe() {
     this._resizeObserver = new ResizeObserver(() => this._update()), this._resizeObserver.observe(this), this._resizeObserver.observe(this._original), this._intersectionObserver = new IntersectionObserver(
@@ -149,24 +160,24 @@ class c extends HTMLElement {
     this.dataset.axis = this.axis, this.dataset.direction = this.isReverse ? "reverse" : "forward", this.dataset.behavior = this.behavior, this.dataset.state = this.playState, this.dataset.ready = "", this._clearClones();
     const t = this.axis === "x", e = t ? this._viewport.offsetWidth : this._viewport.offsetHeight, i = t ? this._original.offsetWidth : this._original.offsetHeight;
     if (i === 0 || e === 0) return;
-    const r = this._resolveGapPx();
-    let o = 0;
+    const s = this._resolveGapPx();
+    let r = 0;
     if (this.behavior === "loop" && this.autofill) {
-      const s = i + r;
-      o = Math.max(1, Math.ceil(e * 2 / s));
-    } else this.behavior === "loop" && (o = 1);
-    for (let s = 0; s < o; s++)
+      const a = i + s;
+      r = Math.max(1, Math.ceil(e * 2 / a));
+    } else this.behavior === "loop" && (r = 1);
+    for (let a = 0; a < r; a++)
       this._track.appendChild(this._makeClone());
-    let a, h = 0;
+    let n, l = 0;
     if (this.behavior === "loop")
-      a = i + r;
+      n = i + s;
     else if (this.behavior === "alternate") {
-      const s = i - e;
-      a = Math.abs(s), h = -s;
+      const a = i - e;
+      n = Math.abs(a), l = -a;
     } else
-      a = i;
-    const n = a > 0 ? a / this.speed : 0;
-    this.style.setProperty("--marquee-duration", `${n}s`), this.style.setProperty("--marquee-gap", this.gap), this.style.setProperty("--marquee-item-size", `${i}px`), this.style.setProperty("--marquee-cycle-distance", `${a}px`), this.style.setProperty("--marquee-alternate-distance", `${h}px`), this.style.setProperty("--marquee-viewport-size", `${e}px`);
+      n = i;
+    const c = n > 0 ? n / this.speed : 0;
+    this.style.setProperty("--marquee-duration", `${c}s`), this.style.setProperty("--marquee-gap", this.gap), this.style.setProperty("--marquee-item-size", `${i}px`), this.style.setProperty("--marquee-cycle-distance", `${n}px`), this.style.setProperty("--marquee-alternate-distance", `${l}px`), this.style.setProperty("--marquee-viewport-size", `${e}px`);
   }
   _resolveGapPx() {
     const t = getComputedStyle(this._track), e = this.axis === "x" ? t.columnGap : t.rowGap, i = parseFloat(e);
@@ -176,8 +187,8 @@ class c extends HTMLElement {
     this.dispatchEvent(new CustomEvent(t, { bubbles: !0 }));
   }
 }
-customElements.define("marquee-wc", c);
+customElements.define("marquee-wc", u);
 export {
-  c as MarqueeWc
+  u as MarqueeWc
 };
 //# sourceMappingURL=marquee-wc.js.map
