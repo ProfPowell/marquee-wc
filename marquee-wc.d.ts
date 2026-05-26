@@ -35,7 +35,8 @@ export type MarqueeMode =
   | 'leet'
   | 'blink'
   | 'chase'
-  | 'invert';
+  | 'invert'
+  | 'decode';
 
 /** Granularity for the per-unit motion modes. */
 export type MarqueeUnit = 'letter' | 'word';

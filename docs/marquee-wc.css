@@ -609,6 +609,18 @@ marquee-wc[mode='invert'] .marquee-space {
   padding-inline: 0;
 }
 
+/* decode — units flicker through random glyphs (set in JS) then lock onto the
+   real text. Monospace keeps the width stable while glyphs change, so scrolling
+   stays smooth. Matrix-green glow by default. */
+marquee-wc[mode='decode'] {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: var(--marquee-fg, var(--color-success, oklch(82% 0.2 145)));
+  text-shadow: 0 0 0.25em currentColor;
+}
+marquee-wc[mode='decode'] .marquee-char {
+  display: inline-block;
+}
+
 /* ransom — cut-out magazine letters: random font, tilt, scale, colored chip */
 marquee-wc[mode='ransom'] {
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);

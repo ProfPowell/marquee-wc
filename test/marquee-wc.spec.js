@@ -157,6 +157,35 @@ test.describe('Letter modes', () => {
   });
 });
 
+test.describe('Decode mode', () => {
+  test('stores targets in data-ch and settles on the real text', async ({ page }) => {
+    const item = page.locator('#decode .marquee-item').first();
+    await expect(item.locator('.marquee-char').first()).toBeVisible();
+
+    const sel = '#decode .marquee-item:not([data-clone]) .marquee-char';
+    const targetsOk = await page.evaluate(
+      (s) =>
+        [...document.querySelectorAll(s)].every(
+          (c) => c.classList.contains('marquee-space') || c.dataset.ch != null
+        ),
+      sel
+    );
+    expect(targetsOk).toBe(true);
+
+    // The scramble loop locks onto the real text within a cycle.
+    await expect
+      .poll(
+        () =>
+          page.evaluate(
+            (s) => [...document.querySelectorAll(s)].map((c) => c.textContent).join(''),
+            sel
+          ),
+        { timeout: 5000 }
+      )
+      .toBe('DECODE ME');
+  });
+});
+
 test.describe('Accessibility', () => {
   test('respects reduced motion preference (animation disabled)', async ({ browser }) => {
     const context = await browser.newContext({ reducedMotion: 'reduce' });
