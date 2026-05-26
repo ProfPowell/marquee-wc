@@ -4,12 +4,12 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/super-marquee.js",
+      "path": "src/marquee-wc.js",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "SuperMarquee",
+          "name": "MarqueeWc",
           "members": [
             {
               "kind": "field",
@@ -164,25 +164,25 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "tagName": "super-marquee",
+          "tagName": "marquee-wc",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "super-marquee",
+          "name": "marquee-wc",
           "declaration": {
-            "name": "SuperMarquee",
-            "module": "src/super-marquee.js"
+            "name": "MarqueeWc",
+            "module": "src/marquee-wc.js"
           }
         },
         {
           "kind": "js",
-          "name": "SuperMarquee",
+          "name": "MarqueeWc",
           "declaration": {
-            "name": "SuperMarquee",
-            "module": "src/super-marquee.js"
+            "name": "MarqueeWc",
+            "module": "src/marquee-wc.js"
           }
         }
       ]

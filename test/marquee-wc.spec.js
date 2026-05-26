@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/test/test-page.html');
-  await page.waitForFunction(() => customElements.get('super-marquee') !== undefined);
+  await page.waitForFunction(() => customElements.get('marquee-wc') !== undefined);
 });
 
 test.describe('Basic Functionality', () => {
   test('upgrades and is defined', async ({ page }) => {
-    const defined = await page.evaluate(() => customElements.get('super-marquee') !== undefined);
+    const defined = await page.evaluate(() => customElements.get('marquee-wc') !== undefined);
     expect(defined).toBe(true);
   });
 
@@ -128,7 +128,7 @@ test.describe('Accessibility', () => {
     const context = await browser.newContext({ reducedMotion: 'reduce' });
     const page = await context.newPage();
     await page.goto('/test/test-page.html');
-    await page.waitForFunction(() => customElements.get('super-marquee') !== undefined);
+    await page.waitForFunction(() => customElements.get('marquee-wc') !== undefined);
     const animationName = await page.evaluate(() => {
       const track = document.querySelector('#default .marquee-track');
       return getComputedStyle(track).animationName;

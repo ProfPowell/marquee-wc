@@ -5,9 +5,9 @@ export default defineConfig({
   root: '.',
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/super-marquee.js'),
-      name: 'SuperMarquee',
-      fileName: 'super-marquee',
+      entry: resolve(__dirname, 'src/marquee-wc.js'),
+      name: 'MarqueeWc',
+      fileName: 'marquee-wc',
       formats: ['es'],
     },
     outDir: 'dist',

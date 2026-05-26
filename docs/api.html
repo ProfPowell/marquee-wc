@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API — marquee-wc</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/vanilla-breeze.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/components/theme-picker.js"
+    ></script>
+
+    <link rel="stylesheet" href="marquee-wc.css" />
+    <script type="module" src="marquee-wc.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <span class="logo">&lt;marquee-wc&gt;</span>
+      <span class="links">
+        <a href="index.html">Home</a>
+        <a href="demos.html">Demos</a>
+        <a href="api.html" class="active">API</a>
+        <a href="https://github.com/profpowell/marquee-wc">GitHub</a>
+      </span>
+      <span class="spacer"></span>
+      <theme-picker></theme-picker>
+    </nav>
+
+    <main>
+      <section class="hero" style="padding-block: 2rem 0">
+        <h1 style="font-size: clamp(1.75rem, 5vw, 2.75rem)">API reference</h1>
+      </section>
+
+      <section id="attributes">
+        <h2>Attributes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>direction</code></td>
+              <td>string</td>
+              <td><code>left</code></td>
+              <td><code>left</code> | <code>right</code> | <code>up</code> | <code>down</code></td>
+            </tr>
+            <tr>
+              <td><code>speed</code></td>
+              <td>number</td>
+              <td><code>50</code></td>
+              <td>Pixels per second</td>
+            </tr>
+            <tr>
+              <td><code>behavior</code></td>
+              <td>string</td>
+              <td><code>loop</code></td>
+              <td><code>loop</code> | <code>slide</code> | <code>alternate</code></td>
+            </tr>
+            <tr>
+              <td><code>gap</code></td>
+              <td>length</td>
+              <td><code>2rem</code></td>
+              <td>CSS length between repeats</td>
+            </tr>
+            <tr>
+              <td><code>pause-on-hover</code></td>
+              <td>boolean</td>
+              <td>—</td>
+              <td>Also pauses on <code>:focus-within</code></td>
+            </tr>
+            <tr>
+              <td><code>play-state</code></td>
+              <td>string</td>
+              <td><code>running</code></td>
+              <td><code>running</code> | <code>paused</code></td>
+            </tr>
+            <tr>
+              <td><code>autofill</code></td>
+              <td>boolean</td>
+              <td><code>true</code></td>
+              <td>Clone short content to fill the viewport (<code>false</code> to opt out)</td>
+            </tr>
+            <tr>
+              <td><code>fade</code></td>
+              <td>boolean</td>
+              <td>—</td>
+              <td>Apply an edge fade mask</td>
+            </tr>
+            <tr>
+              <td><code>reduced-motion</code></td>
+              <td>string</td>
+              <td><code>respect</code></td>
+              <td><code>respect</code> | <code>ignore</code></td>
+            </tr>
+            <tr>
+              <td><code>theme</code></td>
+              <td>string</td>
+              <td>—</td>
+              <td>
+                <code>ticker</code> | <code>breaking-news</code> | <code>code-block</code> |
+                <code>screen-saver</code> | <code>credits</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="methods">
+        <h2>Methods &amp; properties</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>start()</code></td>
+              <td>Play (sets <code>play-state="running"</code>)</td>
+            </tr>
+            <tr>
+              <td><code>stop()</code></td>
+              <td>Pause (sets <code>play-state="paused"</code>)</td>
+            </tr>
+            <tr>
+              <td><code>toggle()</code></td>
+              <td>Flip between running and paused</td>
+            </tr>
+            <tr>
+              <td><code>refresh()</code></td>
+              <td>Recompute clones / distance / duration after dynamic content changes</td>
+            </tr>
+            <tr>
+              <td>
+                <code>direction</code>, <code>speed</code>, <code>behavior</code>,
+                <code>playState</code>, <code>axis</code>
+              </td>
+              <td>Readonly getters reflecting current configuration</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="events">
+        <h2>Events</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Fired when</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>marquee-start</code></td>
+              <td>The marquee starts (on connect and on resume)</td>
+            </tr>
+            <tr>
+              <td><code>marquee-pause</code></td>
+              <td>The marquee is paused</td>
+            </tr>
+            <tr>
+              <td><code>marquee-cycle</code></td>
+              <td>Each animation loop iteration completes</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>All events bubble.</p>
+        <pre><code>el.addEventListener('marquee-cycle', () =&gt; console.log('one loop completed'));</code></pre>
+      </section>
+
+      <section id="css">
+        <h2>CSS custom properties</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>--marquee-gap</code></td>
+              <td>Space between repeats</td>
+            </tr>
+            <tr>
+              <td><code>--marquee-fade-size</code></td>
+              <td>Edge fade mask size (with <code>[fade]</code>)</td>
+            </tr>
+            <tr>
+              <td><code>--marquee-bg</code> / <code>--marquee-fg</code></td>
+              <td>Themed-variant background / foreground</td>
+            </tr>
+            <tr>
+              <td><code>--marquee-label</code></td>
+              <td><code>breaking-news</code> label text</td>
+            </tr>
+            <tr>
+              <td><code>--marquee-duration</code>, <code>--marquee-cycle-distance</code></td>
+              <td>Computed by the component — do not set</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="vanilla-breeze">
+        <h2>Vanilla Breeze integration</h2>
+        <p>
+          Themed variants read Vanilla Breeze design tokens through layered
+          <code>var()</code> fallbacks. A <code>--marquee-*</code> override always wins; absent
+          that, the VB token is used; absent that, a built-in default applies — so non-VB pages
+          render identically.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Theme</th>
+              <th>Vanilla Breeze tokens consumed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ticker</code></td>
+              <td>
+                <code>--color-surface</code>, <code>--color-text</code>, <code>--font-mono</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>breaking-news</code></td>
+              <td><code>--color-error</code>, <code>--font-sans</code></td>
+            </tr>
+            <tr>
+              <td><code>code-block</code></td>
+              <td>
+                <code>--color-surface-sunken</code>, <code>--color-text</code>,
+                <code>--font-mono</code>, <code>--radius-m</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>screen-saver</code></td>
+              <td>
+                <code>--color-background</code>, <code>--color-accent</code>,
+                <code>--font-sans</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>credits</code></td>
+              <td><code>--font-serif</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          See it live on the <a href="index.html#theme-integration">home page</a> — open the theme
+          picker and switch themes.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <code>&lt;marquee-wc&gt;</code> is part of the
+        <a href="https://vanilla-breeze.com">Vanilla Breeze</a> family of vanilla web components.
+      </p>
+      <p>MIT licensed.</p>
+    </footer>
+  </body>
+</html>

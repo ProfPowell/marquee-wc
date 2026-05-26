@@ -1,8 +1,11 @@
-# &lt;super-marquee&gt;
+# &lt;marquee-wc&gt;
 
 The `<marquee>` tag reborn for 2026. A modern, accessible, themeable web
 component for scrolling content — from a stock ticker to a dot-matrix readout,
 a vertical credit roll, or (yes) an annoying retro web effect.
+
+**[Live demo &amp; docs →](https://profpowell.github.io/marquee-wc/)** — open the theme
+picker and watch the themed marquees re-skin with Vanilla Breeze in real time.
 
 ## Features
 
@@ -28,8 +31,8 @@ npm install @profpowell/marquee-wc
 Or use via CDN:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@profpowell/marquee-wc/dist/super-marquee.css" />
-<script type="module" src="https://unpkg.com/@profpowell/marquee-wc/dist/super-marquee.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@profpowell/marquee-wc/dist/marquee-wc.css" />
+<script type="module" src="https://unpkg.com/@profpowell/marquee-wc/dist/marquee-wc.js"></script>
 ```
 
 The component renders in the light DOM, so its stylesheet must be present on the
@@ -38,10 +41,10 @@ page (link the CSS, or `import '@profpowell/marquee-wc/style.css'` in a bundler)
 ## Usage
 
 ```html
-<link rel="stylesheet" href="dist/super-marquee.css" />
-<script type="module" src="dist/super-marquee.js"></script>
+<link rel="stylesheet" href="dist/marquee-wc.css" />
+<script type="module" src="dist/marquee-wc.js"></script>
 
-<super-marquee speed="60" pause-on-hover> This text scrolls smoothly, forever. </super-marquee>
+<marquee-wc speed="60" pause-on-hover> This text scrolls smoothly, forever. </marquee-wc>
 ```
 
 ## Attributes
@@ -72,7 +75,7 @@ page (link the CSS, or `import '@profpowell/marquee-wc/style.css'` in a bundler)
 ## API
 
 ```javascript
-const el = document.querySelector('super-marquee');
+const el = document.querySelector('marquee-wc');
 
 el.start(); // play-state="running"
 el.stop(); // play-state="paused"
@@ -102,7 +105,7 @@ All events bubble.
 ## CSS Custom Properties
 
 ```css
-super-marquee {
+marquee-wc {
   --marquee-gap: 2rem; /* space between repeats */
   --marquee-fade-size: 3rem; /* edge fade mask size (with [fade]) */
   --marquee-bg: …; /* themed-variant background */
@@ -116,7 +119,7 @@ component — don't set them yourself.
 
 ## Using with Vanilla Breeze
 
-`<super-marquee>` reads Vanilla Breeze design tokens (`--color-surface`,
+`<marquee-wc>` reads Vanilla Breeze design tokens (`--color-surface`,
 `--color-text`, `--color-error`, `--color-accent`, `--font-mono`, `--font-serif`,
 `--radius-m`, …) through layered `var()` fallbacks. A `--marquee-*` override
 always wins; absent that, a VB token is used; absent that, a built-in default
@@ -125,7 +128,7 @@ automatically:
 
 ```html
 <html data-theme="…">
-  <super-marquee theme="ticker">Reads --color-surface, --color-text, --font-mono</super-marquee>
+  <marquee-wc theme="ticker">Reads --color-surface, --color-text, --font-mono</marquee-wc>
 </html>
 ```
 
@@ -151,6 +154,10 @@ npm run lint         # Lint src/
 npm run format       # Format with Prettier
 npm run analyze      # Regenerate custom-elements.json
 ```
+
+The documentation site lives in `docs/` (served via GitHub Pages). It loads
+Vanilla Breeze and its `<theme-picker>` from a CDN to demonstrate the theme
+integration live. `npm run build` refreshes the component copy in `docs/`.
 
 ## License
 
