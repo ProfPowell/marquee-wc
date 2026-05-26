@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demos — marquee-wc</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/vanilla-breeze.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/components/theme-picker.js"
+    ></script>
+
+    <link rel="stylesheet" href="marquee-wc.css" />
+    <script type="module" src="marquee-wc.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <span class="logo">&lt;marquee-wc&gt;</span>
+      <span class="links">
+        <a href="index.html">Home</a>
+        <a href="demos.html" class="active">Demos</a>
+        <a href="api.html">API</a>
+        <a href="https://github.com/profpowell/marquee-wc">GitHub</a>
+      </span>
+      <span class="spacer"></span>
+      <theme-picker></theme-picker>
+    </nav>
+
+    <main>
+      <section class="hero" style="padding-block: 2rem 0">
+        <h1 style="font-size: clamp(1.75rem, 5vw, 2.75rem)">Demos</h1>
+        <p class="tagline">
+          Every mode, behavior, and theme. Open the <strong>theme picker</strong> to watch the
+          themed variants re-skin with Vanilla Breeze.
+        </p>
+      </section>
+
+      <section>
+        <h2>1. Legacy <code>&lt;marquee&gt;</code> emulation</h2>
+        <p>Drop-in mental model. Defaults match the old behavior — but with constant velocity.</p>
+        <div class="demo">
+          <marquee-wc>
+            This is what the old &lt;marquee&gt; looked like. Now with constant velocity, autofill,
+            and pause-when-offscreen.
+          </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. <code>theme="ticker"</code></h2>
+        <p>Stock ticker. Monospace, fade edges, dot separators, pause-on-hover.</p>
+        <div class="demo">
+          <marquee-wc theme="ticker" speed="80" pause-on-hover fade>
+            <span class="stock">AAPL <span class="stock-up">▲ 178.42 (+1.2%)</span></span>
+            <span class="stock">MSFT <span class="stock-up">▲ 412.18 (+0.4%)</span></span>
+            <span class="stock">GOOG <span class="stock-down">▼ 138.21 (−0.8%)</span></span>
+            <span class="stock">NVDA <span class="stock-up">▲ 822.15 (+2.1%)</span></span>
+            <span class="stock">META <span class="stock-down">▼ 478.50 (−0.3%)</span></span>
+            <span class="stock">TSLA <span class="stock-up">▲ 192.30 (+3.4%)</span></span>
+          </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. <code>theme="breaking-news"</code></h2>
+        <p>Bold bar with a label set via <code>--marquee-label</code> in CSS.</p>
+        <div class="demo">
+          <marquee-wc theme="breaking-news" speed="60" pause-on-hover>
+            Web standards adopt <code>&lt;marquee-wc&gt;</code> as a new HTML element. All major
+            browsers ship in 2026. Developers rejoice. The 90s are back.
+          </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. Logo wall (autofill)</h2>
+        <p>Short content auto-clones to fill the viewport. Try resizing the window.</p>
+        <div class="demo">
+          <marquee-wc class="card" speed="40" pause-on-hover style="padding-block: 1rem">
+            <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg" style="height: 2.5rem">
+              <text x="50" y="28" text-anchor="middle" font-size="20" font-weight="900">ACME</text>
+            </svg>
+            <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg" style="height: 2.5rem">
+              <text x="50" y="28" text-anchor="middle" font-size="18" font-style="italic">
+                Globex
+              </text>
+            </svg>
+            <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg" style="height: 2.5rem">
+              <text x="50" y="28" text-anchor="middle" font-size="20" font-weight="300">
+                SOYLENT
+              </text>
+            </svg>
+            <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg" style="height: 2.5rem">
+              <text x="50" y="28" text-anchor="middle" font-size="18" font-weight="700">
+                Initech
+              </text>
+            </svg>
+            <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg" style="height: 2.5rem">
+              <text x="50" y="28" text-anchor="middle" font-size="18" font-weight="500">Hooli</text>
+            </svg>
+          </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>5. <code>theme="code-block"</code> — long-line tickers</h2>
+        <p>Useful for terminal output, build logs, or a long line of code that won't wrap.</p>
+        <div class="demo">
+          <marquee-wc theme="code-block" speed="50" pause-on-hover>
+            $ cloudflare deploy --env production --branch main --route vanilla-breeze.com/* --vars
+            KV_NAMESPACE=breeze_v2,API_TOKEN=*** --compatibility-date=2026-05-22
+          </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>6. <code>theme="screen-saver"</code> + <code>behavior="alternate"</code></h2>
+        <p>Bouncing DVD-logo energy. Alternate behavior with easing.</p>
+        <div class="demo">
+          <marquee-wc theme="screen-saver" behavior="alternate" speed="80">HELLO WORLD</marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>7. <code>theme="credits"</code> — vertical credit roll</h2>
+        <p><code>direction="up"</code>, slow speed, vertical fade.</p>
+        <div class="demo">
+          <marquee-wc theme="credits" direction="up" speed="30" pause-on-hover>
+            <div>
+              <p><strong>VANILLA BREEZE</strong></p>
+              <p>A platform-first framework</p>
+              <br />
+              <p><strong>WRITTEN AND DIRECTED BY</strong></p>
+              <p>Thomas Powell</p>
+              <br />
+              <p><strong>CO-STARRING</strong></p>
+              <p>screen-saver</p>
+              <p>code-block</p>
+              <p>terminal-window</p>
+              <br />
+              <p><strong>NO FRAMEWORKS</strong></p>
+              <p>were harmed in the making of this site</p>
+            </div>
+          </marquee-wc>
+        </div>
+      </section>
+
+      <section>
+        <h2>8. Programmatic control</h2>
+        <p>
+          <code>start()</code>, <code>stop()</code>, and <code>toggle()</code> work just like the
+          old <code>&lt;marquee&gt;</code>. The component also fires <code>marquee-cycle</code> on
+          each loop iteration.
+        </p>
+        <div class="demo">
+          <marquee-wc id="ctrl" class="card" speed="100">
+            Use the buttons below to control this marquee.
+          </marquee-wc>
+          <div class="controls">
+            <button onclick="document.getElementById('ctrl').start()">start()</button>
+            <button onclick="document.getElementById('ctrl').stop()">stop()</button>
+            <button onclick="document.getElementById('ctrl').toggle()">toggle()</button>
+            <button id="cycle-count">cycles: 0</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>9. Vertical scroll (up &amp; down)</h2>
+        <p><code>direction="up"</code> and <code>direction="down"</code>.</p>
+        <div class="grid">
+          <marquee-wc direction="up" speed="40" pause-on-hover class="card" style="height: 8rem">
+            <div>
+              <p>Item up 1</p>
+              <p>Item up 2</p>
+              <p>Item up 3</p>
+              <p>Item up 4</p>
+              <p>Item up 5</p>
+            </div>
+          </marquee-wc>
+          <marquee-wc direction="down" speed="40" pause-on-hover class="card" style="height: 8rem">
+            <div>
+              <p>Item down 1</p>
+              <p>Item down 2</p>
+              <p>Item down 3</p>
+              <p>Item down 4</p>
+              <p>Item down 5</p>
+            </div>
+          </marquee-wc>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <code>&lt;marquee-wc&gt;</code> is part of the
+        <a href="https://vanilla-breeze.com">Vanilla Breeze</a> family of vanilla web components.
+      </p>
+      <p>MIT licensed.</p>
+    </footer>
+
+    <script>
+      let cycles = 0;
+      document.getElementById('ctrl').addEventListener('marquee-cycle', () => {
+        document.getElementById('cycle-count').textContent = `cycles: ${++cycles}`;
+      });
+    </script>
+  </body>
+</html>

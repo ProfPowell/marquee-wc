@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>marquee-wc — the &lt;marquee&gt; tag, reborn for 2026</title>
+    <meta
+      name="description"
+      content="A modern, accessible, themeable <marquee> web component that integrates with Vanilla Breeze design tokens."
+    />
+
+    <!-- Vanilla Breeze: design tokens, themes, and the <theme-picker> component -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/vanilla-breeze.css"
+    />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/components/theme-picker.js"
+    ></script>
+
+    <!-- The component being documented -->
+    <link rel="stylesheet" href="marquee-wc.css" />
+    <script type="module" src="marquee-wc.js"></script>
+
+    <!-- Documentation site styles (built on Vanilla Breeze tokens) -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <span class="logo">&lt;marquee-wc&gt;</span>
+      <span class="links">
+        <a href="index.html" class="active">Home</a>
+        <a href="demos.html">Demos</a>
+        <a href="api.html">API</a>
+        <a href="https://github.com/profpowell/marquee-wc">GitHub</a>
+      </span>
+      <span class="spacer"></span>
+      <theme-picker></theme-picker>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <h1>&lt;marquee-wc&gt;</h1>
+        <p class="tagline">
+          The <code>&lt;marquee&gt;</code> tag reborn for 2026 — accessible, constant-velocity,
+          themeable, and Vanilla Breeze aware.
+        </p>
+        <div class="btn-group">
+          <a class="btn" href="demos.html">See the demos</a>
+          <a class="btn btn-secondary" href="https://github.com/profpowell/marquee-wc"
+            >View source</a
+          >
+        </div>
+
+        <div class="demo" style="margin-top: 2.5rem">
+          <marquee-wc theme="ticker" speed="80" pause-on-hover fade>
+            <span class="stock">AAPL <span class="stock-up">▲ 178.42 (+1.2%)</span></span>
+            <span class="stock">MSFT <span class="stock-up">▲ 412.18 (+0.4%)</span></span>
+            <span class="stock">GOOG <span class="stock-down">▼ 138.21 (−0.8%)</span></span>
+            <span class="stock">NVDA <span class="stock-up">▲ 822.15 (+2.1%)</span></span>
+            <span class="stock">TSLA <span class="stock-up">▲ 192.30 (+3.4%)</span></span>
+          </marquee-wc>
+        </div>
+      </section>
+
+      <!-- ── Theme integration showcase ─────────────────────────────────── -->
+      <section id="theme-integration">
+        <h2>Live Vanilla Breeze theme integration</h2>
+        <div class="callout">
+          <p style="margin: 0">
+            Open the <strong>theme picker</strong> in the top-right corner and switch the mode,
+            brand theme, or accent. Every themed <code>&lt;marquee-wc&gt;</code> below — and this
+            entire page — re-themes instantly, because they read the same Vanilla Breeze design
+            tokens (<code>--color-surface</code>, <code>--color-text</code>,
+            <code>--color-accent</code>, <code>--color-error</code>, <code>--font-mono</code>,
+            <code>--font-serif</code>, …). No JavaScript wiring, no configuration.
+          </p>
+        </div>
+
+        <h3>
+          <code>theme="ticker"</code> — reads <code>--color-surface</code> /
+          <code>--font-mono</code>
+        </h3>
+        <div class="demo">
+          <marquee-wc theme="ticker" speed="70" pause-on-hover fade>
+            <span>Tokens flow downhill.</span>
+            <span>Switch the theme and watch.</span>
+            <span>One component, every palette.</span>
+          </marquee-wc>
+        </div>
+
+        <h3><code>theme="breaking-news"</code> — reads <code>--color-error</code></h3>
+        <div class="demo">
+          <marquee-wc theme="breaking-news" speed="60" pause-on-hover>
+            The marquee adopts your theme automatically. No <code>--marquee-*</code> overrides
+            required — but they still win if you set them.
+          </marquee-wc>
+        </div>
+
+        <h3><code>theme="code-block"</code> — reads the surface + mono tokens</h3>
+        <div class="demo">
+          <marquee-wc theme="code-block" speed="50" pause-on-hover>
+            $ npm install @profpowell/marquee-wc &amp;&amp; echo "themed by vanilla-breeze" # try a
+            dark mode in the picker ↗
+          </marquee-wc>
+        </div>
+
+        <p>
+          Prefer a fixed look? Set a <code>--marquee-*</code> override (e.g.
+          <code>--marquee-bg</code>) and it always wins over the Vanilla Breeze token. Pages without
+          Vanilla Breeze fall back to the component's built-in defaults and render identically.
+        </p>
+      </section>
+
+      <!-- ── Features ───────────────────────────────────────────────────── -->
+      <section id="features">
+        <h2>Features</h2>
+        <ul class="feature-list">
+          <li>Zero dependencies — pure vanilla JavaScript, light DOM</li>
+          <li>Constant velocity regardless of content length</li>
+          <li>Four directions, three behaviors (loop / slide / alternate)</li>
+          <li>Autofill clones short content to seamlessly fill the viewport</li>
+          <li>Pauses when offscreen and when the tab is hidden</li>
+          <li>Respects <code>prefers-reduced-motion</code></li>
+          <li>Accessible clones — <code>aria-hidden</code>, <code>inert</code>, id-stripped</li>
+          <li>
+            Legacy-compatible API: <code>start()</code> / <code>stop()</code> /
+            <code>toggle()</code>
+          </li>
+          <li>Built-in themes + full CSS custom property theming</li>
+          <li>Vanilla Breeze design-token aware</li>
+        </ul>
+      </section>
+
+      <!-- ── Quick start ────────────────────────────────────────────────── -->
+      <section id="quick-start">
+        <h2>Quick start</h2>
+        <pre><code>&lt;link rel="stylesheet" href="marquee-wc.css" /&gt;
+&lt;script type="module" src="marquee-wc.js"&gt;&lt;/script&gt;
+
+&lt;marquee-wc speed="60" pause-on-hover&gt;
+  This text scrolls smoothly, forever.
+&lt;/marquee-wc&gt;</code></pre>
+      </section>
+
+      <!-- ── Install ────────────────────────────────────────────────────── -->
+      <section id="install">
+        <h2>Install</h2>
+        <h3>npm</h3>
+        <pre><code>npm install @profpowell/marquee-wc</code></pre>
+        <h3>CDN</h3>
+        <pre><code>&lt;link rel="stylesheet"
+  href="https://unpkg.com/@profpowell/marquee-wc/dist/marquee-wc.css" /&gt;
+&lt;script type="module"
+  src="https://unpkg.com/@profpowell/marquee-wc/dist/marquee-wc.js"&gt;&lt;/script&gt;</code></pre>
+        <p>
+          The component renders in the light DOM, so its stylesheet must be present on the page
+          (link the CSS, or <code>import '@profpowell/marquee-wc/style.css'</code> in a bundler).
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <code>&lt;marquee-wc&gt;</code> is part of the
+        <a href="https://vanilla-breeze.com">Vanilla Breeze</a> family of vanilla web components.
+      </p>
+      <div class="ecosystem">
+        <a href="https://github.com/profpowell/screen-saver">screen-saver</a>
+        <a href="https://github.com/profpowell/code-block">code-block</a>
+        <a href="https://github.com/profpowell/terminal-window">terminal-window</a>
+        <a href="https://github.com/profpowell/browser-window">browser-window</a>
+      </div>
+      <p>MIT licensed.</p>
+    </footer>
+  </body>
+</html>

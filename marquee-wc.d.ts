@@ -1,5 +1,5 @@
 /**
- * <super-marquee> — a modern, accessible, themeable replacement for the
+ * <marquee-wc> — a modern, accessible, themeable replacement for the
  * deprecated <marquee> element. Light DOM, constant-velocity, and Vanilla
  * Breeze design-token aware.
  */
@@ -10,13 +10,13 @@ export type MarqueePlayState = 'running' | 'paused';
 export type MarqueeReducedMotion = 'respect' | 'ignore';
 export type MarqueeAxis = 'x' | 'y';
 
-export interface SuperMarqueeEventMap {
+export interface MarqueeWcEventMap {
   'marquee-start': CustomEvent<void>;
   'marquee-pause': CustomEvent<void>;
   'marquee-cycle': CustomEvent<void>;
 }
 
-export declare class SuperMarquee extends HTMLElement {
+export declare class MarqueeWc extends HTMLElement {
   static get observedAttributes(): string[];
 
   /** Scroll direction. Attribute: `direction`. Default `left`. */
@@ -49,9 +49,9 @@ export declare class SuperMarquee extends HTMLElement {
   disconnectedCallback(): void;
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void;
 
-  addEventListener<K extends keyof SuperMarqueeEventMap>(
+  addEventListener<K extends keyof MarqueeWcEventMap>(
     type: K,
-    listener: (this: SuperMarquee, ev: SuperMarqueeEventMap[K]) => unknown,
+    listener: (this: MarqueeWc, ev: MarqueeWcEventMap[K]) => unknown,
     options?: boolean | AddEventListenerOptions
   ): void;
   addEventListener(
@@ -63,6 +63,6 @@ export declare class SuperMarquee extends HTMLElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'super-marquee': SuperMarquee;
+    'marquee-wc': MarqueeWc;
   }
 }

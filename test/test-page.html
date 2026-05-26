@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>&lt;super-marquee&gt; — test harness</title>
-    <link rel="stylesheet" href="../src/super-marquee.css" />
+    <title>&lt;marquee-wc&gt; — test harness</title>
+    <link rel="stylesheet" href="../src/marquee-wc.css" />
     <style>
       body {
         font-family: system-ui, sans-serif;
@@ -21,49 +21,49 @@
     </style>
   </head>
   <body>
-    <h1>super-marquee test harness</h1>
+    <h1>marquee-wc test harness</h1>
 
     <section>
       <h2>Default (loop, left)</h2>
-      <super-marquee id="default" speed="100">
+      <marquee-wc id="default" speed="100">
         Hello from the default marquee. The old tag, reborn.
-      </super-marquee>
+      </marquee-wc>
     </section>
 
     <section>
       <h2>Ticker theme</h2>
-      <super-marquee id="ticker" theme="ticker" speed="80" pause-on-hover fade>
+      <marquee-wc id="ticker" theme="ticker" speed="80" pause-on-hover fade>
         <span>AAPL ▲ 178.42</span>
         <span>MSFT ▲ 412.18</span>
         <span>GOOG ▼ 138.21</span>
-      </super-marquee>
+      </marquee-wc>
     </section>
 
     <section>
       <h2>Slide behavior</h2>
-      <super-marquee id="slide" behavior="slide" speed="120"> Sliding in once. </super-marquee>
+      <marquee-wc id="slide" behavior="slide" speed="120"> Sliding in once. </marquee-wc>
     </section>
 
     <section>
       <h2>Vertical (up)</h2>
-      <super-marquee id="vertical" direction="up" speed="40" class="box">
+      <marquee-wc id="vertical" direction="up" speed="40" class="box">
         <div>
           <p>Line one</p>
           <p>Line two</p>
           <p>Line three</p>
         </div>
-      </super-marquee>
+      </marquee-wc>
     </section>
 
     <section>
       <h2>Controls</h2>
-      <super-marquee id="ctrl" speed="100"> Controllable marquee. </super-marquee>
+      <marquee-wc id="ctrl" speed="100"> Controllable marquee. </marquee-wc>
       <button id="btn-start">start</button>
       <button id="btn-stop">stop</button>
       <button id="btn-toggle">toggle</button>
     </section>
 
-    <script type="module" src="../src/super-marquee.js"></script>
+    <script type="module" src="../src/marquee-wc.js"></script>
     <script type="module">
       const ctrl = document.getElementById('ctrl');
       document.getElementById('btn-start').addEventListener('click', () => ctrl.start());

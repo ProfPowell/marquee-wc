@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>&lt;super-marquee&gt; — Vanilla Breeze demo</title>
-    <link rel="stylesheet" href="src/super-marquee.css" />
+    <title>&lt;marquee-wc&gt; — Vanilla Breeze demo</title>
+    <link rel="stylesheet" href="src/marquee-wc.css" />
     <style>
       :root {
         color-scheme: light dark;
@@ -118,7 +118,7 @@
     </style>
   </head>
   <body>
-    <h1>&lt;super-marquee&gt;</h1>
+    <h1>&lt;marquee-wc&gt;</h1>
     <p>
       A modern, themable, accessible marquee. The pragmatic platform answer to a problem that won't
       die.
@@ -128,30 +128,30 @@
     <h2>1. Legacy &lt;marquee&gt; emulation</h2>
     <p>Drop-in mental model. Defaults match the old behavior.</p>
 
-    <super-marquee>
+    <marquee-wc>
       This is what the old &lt;marquee&gt; looked like. Now with constant velocity, autofill, and
       pause-when-offscreen.
-    </super-marquee>
+    </marquee-wc>
 
     <details>
       <summary>HTML</summary>
-      <pre><code>&lt;super-marquee&gt;
+      <pre><code>&lt;marquee-wc&gt;
   This is what the old &amp;lt;marquee&amp;gt; looked like…
-&lt;/super-marquee&gt;</code></pre>
+&lt;/marquee-wc&gt;</code></pre>
     </details>
 
     <!-- ── 2. Ticker theme ───────────────────────────────────────────────── -->
     <h2>2. <code>theme="ticker"</code></h2>
     <p>Stock ticker. Monospace, fade edges, dot separators, pause-on-hover.</p>
 
-    <super-marquee theme="ticker" speed="80" pause-on-hover fade>
+    <marquee-wc theme="ticker" speed="80" pause-on-hover fade>
       <span class="stock">AAPL <span class="stock-up">▲ 178.42 (+1.2%)</span></span>
       <span class="stock">MSFT <span class="stock-up">▲ 412.18 (+0.4%)</span></span>
       <span class="stock">GOOG <span class="stock-down">▼ 138.21 (−0.8%)</span></span>
       <span class="stock">NVDA <span class="stock-up">▲ 822.15 (+2.1%)</span></span>
       <span class="stock">META <span class="stock-down">▼ 478.50 (−0.3%)</span></span>
       <span class="stock">TSLA <span class="stock-up">▲ 192.30 (+3.4%)</span></span>
-    </super-marquee>
+    </marquee-wc>
 
     <!-- ── 3. Breaking news ──────────────────────────────────────────────── -->
     <h2>3. <code>theme="breaking-news"</code></h2>
@@ -160,16 +160,16 @@
       (CSS-only).
     </p>
 
-    <super-marquee theme="breaking-news" speed="60" pause-on-hover>
-      Web standards adopt <code>&lt;super-marquee&gt;</code> as new HTML element. All major browsers
+    <marquee-wc theme="breaking-news" speed="60" pause-on-hover>
+      Web standards adopt <code>&lt;marquee-wc&gt;</code> as new HTML element. All major browsers
       ship in 2026. Developers rejoice. The 90s are back.
-    </super-marquee>
+    </marquee-wc>
 
     <!-- ── 4. Logo wall ──────────────────────────────────────────────────── -->
     <h2>4. Logo wall (autofill)</h2>
     <p>Short content auto-clones to fill viewport. Try resizing the window.</p>
 
-    <super-marquee class="logo-wall" speed="40" pause-on-hover>
+    <marquee-wc class="logo-wall" speed="40" pause-on-hover>
       <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
         <text x="50" y="28" text-anchor="middle" font-size="20" font-weight="900">ACME</text>
       </svg>
@@ -194,30 +194,28 @@
       <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
         <text x="50" y="28" text-anchor="middle" font-size="18" font-weight="500">Hooli</text>
       </svg>
-    </super-marquee>
+    </marquee-wc>
 
     <!-- ── 5. Code block theme ───────────────────────────────────────────── -->
     <h2>5. <code>theme="code-block"</code> — long-line tickers</h2>
     <p>Useful for terminal output, build logs, or a long line of code that won't wrap.</p>
 
-    <super-marquee theme="code-block" speed="50" pause-on-hover>
+    <marquee-wc theme="code-block" speed="50" pause-on-hover>
       $ cloudflare deploy --env production --branch main --route vanilla-breeze.com/* --vars
       KV_NAMESPACE=breeze_v2,API_TOKEN=*** --compatibility-date=2026-05-22
-    </super-marquee>
+    </marquee-wc>
 
     <!-- ── 6. Screen saver ───────────────────────────────────────────────── -->
     <h2>6. <code>theme="screen-saver"</code> + <code>behavior="alternate"</code></h2>
     <p>Bouncing DVD-logo energy. Alternate behavior with easing.</p>
 
-    <super-marquee theme="screen-saver" behavior="alternate" speed="80">
-      HELLO WORLD
-    </super-marquee>
+    <marquee-wc theme="screen-saver" behavior="alternate" speed="80"> HELLO WORLD </marquee-wc>
 
     <!-- ── 7. Vertical credits ───────────────────────────────────────────── -->
     <h2>7. <code>theme="credits"</code> — vertical credit roll</h2>
     <p>Up direction, slow speed, vertical fade.</p>
 
-    <super-marquee theme="credits" direction="up" speed="30" pause-on-hover>
+    <marquee-wc theme="credits" direction="up" speed="30" pause-on-hover>
       <div>
         <p><strong>VANILLA BREEZE</strong></p>
         <p>A platform-first framework</p>
@@ -238,7 +236,7 @@
         <p><strong>NO FRAMEWORKS</strong></p>
         <p>were harmed in the making of this site</p>
       </div>
-    </super-marquee>
+    </marquee-wc>
 
     <!-- ── 8. Programmatic control ───────────────────────────────────────── -->
     <h2>8. Programmatic control (legacy API compat)</h2>
@@ -247,10 +245,10 @@
       <code>&lt;marquee&gt;</code>.
     </p>
 
-    <super-marquee id="ctrl-demo" speed="100">
+    <marquee-wc id="ctrl-demo" speed="100">
       Use the buttons below to control this marquee. It also fires <code>marquee-cycle</code> events
       on each loop iteration.
-    </super-marquee>
+    </marquee-wc>
 
     <div class="controls">
       <button onclick="document.getElementById('ctrl-demo').start()">start()</button>
@@ -264,7 +262,7 @@
     <p><code>direction="down"</code>, also demonstrates RTL-style reverse animation.</p>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
-      <super-marquee
+      <marquee-wc
         direction="up"
         speed="40"
         style="height: 8rem; background: var(--code-bg); border-radius: 0.5rem; padding: 0.5rem"
@@ -277,8 +275,8 @@
           <p>Item up 4</p>
           <p>Item up 5</p>
         </div>
-      </super-marquee>
-      <super-marquee
+      </marquee-wc>
+      <marquee-wc
         direction="down"
         speed="40"
         style="height: 8rem; background: var(--code-bg); border-radius: 0.5rem; padding: 0.5rem"
@@ -291,7 +289,7 @@
           <p>Item down 4</p>
           <p>Item down 5</p>
         </div>
-      </super-marquee>
+      </marquee-wc>
     </div>
 
     <h2>Defensive defaults</h2>
@@ -312,7 +310,7 @@
       </li>
     </ul>
 
-    <script type="module" src="src/super-marquee.js"></script>
+    <script type="module" src="src/marquee-wc.js"></script>
     <script>
       let cycleCount = 0;
       document.getElementById('ctrl-demo').addEventListener('marquee-cycle', () => {

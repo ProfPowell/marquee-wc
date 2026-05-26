@@ -6,24 +6,24 @@
   },
   "description": "A vanilla JavaScript web component: the <marquee> tag reborn for 2026 — accessible, themeable, constant-velocity, and Vanilla Breeze aware",
   "type": "module",
-  "main": "dist/super-marquee.js",
-  "module": "dist/super-marquee.js",
-  "types": "super-marquee.d.ts",
+  "main": "dist/marquee-wc.js",
+  "module": "dist/marquee-wc.js",
+  "types": "marquee-wc.d.ts",
   "exports": {
     ".": {
-      "types": "./super-marquee.d.ts",
-      "import": "./dist/super-marquee.js"
+      "types": "./marquee-wc.d.ts",
+      "import": "./dist/marquee-wc.js"
     },
-    "./style.css": "./dist/super-marquee.css",
-    "./super-marquee.css": "./dist/super-marquee.css"
+    "./style.css": "./dist/marquee-wc.css",
+    "./marquee-wc.css": "./dist/marquee-wc.css"
   },
   "files": [
     "dist",
-    "super-marquee.d.ts"
+    "marquee-wc.d.ts"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp src/super-marquee.css dist/super-marquee.css",
+    "build": "vite build && cp src/marquee-wc.css dist/marquee-wc.css && cp dist/marquee-wc.js dist/marquee-wc.js.map docs/ && cp src/marquee-wc.css docs/marquee-wc.css",
     "preview": "vite preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui",

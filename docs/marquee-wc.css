@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * <super-marquee> — Vanilla Breeze component styles
+ * <marquee-wc> — Vanilla Breeze component styles
  *
  * Theming hooks (CSS custom properties):
  *   --marquee-gap            : space between repeats (overridable via attr)
@@ -24,7 +24,7 @@
  *   data-tab-visible : true | false (Page Visibility)
  * ──────────────────────────────────────────────────────────────────────── */
 
-super-marquee {
+marquee-wc {
   display: block;
   position: relative;
   overflow: hidden;
@@ -35,8 +35,8 @@ super-marquee {
 }
 
 /* Unupgraded fallback: render content statically, no animation */
-super-marquee:not(:defined),
-super-marquee:not([data-ready]) {
+marquee-wc:not(:defined),
+marquee-wc:not([data-ready]) {
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -44,7 +44,7 @@ super-marquee:not([data-ready]) {
 }
 
 /* Edge fade mask via CSS mask (no extra DOM) */
-super-marquee[fade] {
+marquee-wc[fade] {
   --_fade: var(--marquee-fade-size);
   mask-image: linear-gradient(
     to right,
@@ -54,7 +54,7 @@ super-marquee[fade] {
     transparent 100%
   );
 }
-super-marquee[fade][data-axis='y'] {
+marquee-wc[fade][data-axis='y'] {
   mask-image: linear-gradient(
     to bottom,
     transparent 0,
@@ -65,37 +65,37 @@ super-marquee[fade][data-axis='y'] {
 }
 
 /* Internal structure */
-super-marquee .marquee-viewport {
+marquee-wc .marquee-viewport {
   display: flex;
   overflow: hidden;
   width: 100%;
   height: 100%;
 }
-super-marquee[data-axis='y'] .marquee-viewport {
+marquee-wc[data-axis='y'] .marquee-viewport {
   flex-direction: column;
 }
 
-super-marquee .marquee-track {
+marquee-wc .marquee-track {
   display: flex;
   flex-shrink: 0;
   gap: var(--marquee-gap);
   will-change: transform;
 }
-super-marquee[data-axis='y'] .marquee-track {
+marquee-wc[data-axis='y'] .marquee-track {
   flex-direction: column;
 }
 
-super-marquee .marquee-item {
+marquee-wc .marquee-item {
   flex-shrink: 0;
   white-space: nowrap;
 }
-super-marquee[data-axis='y'] .marquee-item {
+marquee-wc[data-axis='y'] .marquee-item {
   white-space: normal;
 }
 
 /* ─── Keyframes ──────────────────────────────────────────────────────── */
 
-@keyframes super-marquee-loop-x {
+@keyframes marquee-wc-loop-x {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -104,7 +104,7 @@ super-marquee[data-axis='y'] .marquee-item {
   }
 }
 
-@keyframes super-marquee-loop-y {
+@keyframes marquee-wc-loop-y {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -113,7 +113,7 @@ super-marquee[data-axis='y'] .marquee-item {
   }
 }
 
-@keyframes super-marquee-slide-x {
+@keyframes marquee-wc-slide-x {
   from {
     transform: translate3d(100%, 0, 0);
   }
@@ -122,7 +122,7 @@ super-marquee[data-axis='y'] .marquee-item {
   }
 }
 
-@keyframes super-marquee-slide-y {
+@keyframes marquee-wc-slide-y {
   from {
     transform: translate3d(0, 100%, 0);
   }
@@ -131,7 +131,7 @@ super-marquee[data-axis='y'] .marquee-item {
   }
 }
 
-@keyframes super-marquee-alternate-x {
+@keyframes marquee-wc-alternate-x {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -140,7 +140,7 @@ super-marquee[data-axis='y'] .marquee-item {
   }
 }
 
-@keyframes super-marquee-alternate-y {
+@keyframes marquee-wc-alternate-y {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -151,50 +151,50 @@ super-marquee[data-axis='y'] .marquee-item {
 
 /* ─── Animation application ──────────────────────────────────────────── */
 
-super-marquee[data-behavior='loop'][data-axis='x'] .marquee-track {
-  animation: super-marquee-loop-x var(--marquee-duration) linear infinite;
+marquee-wc[data-behavior='loop'][data-axis='x'] .marquee-track {
+  animation: marquee-wc-loop-x var(--marquee-duration) linear infinite;
 }
-super-marquee[data-behavior='loop'][data-axis='y'] .marquee-track {
-  animation: super-marquee-loop-y var(--marquee-duration) linear infinite;
+marquee-wc[data-behavior='loop'][data-axis='y'] .marquee-track {
+  animation: marquee-wc-loop-y var(--marquee-duration) linear infinite;
 }
-super-marquee[data-behavior='slide'][data-axis='x'] .marquee-track {
-  animation: super-marquee-slide-x var(--marquee-duration) linear 1 forwards;
+marquee-wc[data-behavior='slide'][data-axis='x'] .marquee-track {
+  animation: marquee-wc-slide-x var(--marquee-duration) linear 1 forwards;
 }
-super-marquee[data-behavior='slide'][data-axis='y'] .marquee-track {
-  animation: super-marquee-slide-y var(--marquee-duration) linear 1 forwards;
+marquee-wc[data-behavior='slide'][data-axis='y'] .marquee-track {
+  animation: marquee-wc-slide-y var(--marquee-duration) linear 1 forwards;
 }
-super-marquee[data-behavior='alternate'][data-axis='x'] .marquee-track {
-  animation: super-marquee-alternate-x var(--marquee-duration) ease-in-out infinite alternate;
+marquee-wc[data-behavior='alternate'][data-axis='x'] .marquee-track {
+  animation: marquee-wc-alternate-x var(--marquee-duration) ease-in-out infinite alternate;
 }
-super-marquee[data-behavior='alternate'][data-axis='y'] .marquee-track {
-  animation: super-marquee-alternate-y var(--marquee-duration) ease-in-out infinite alternate;
+marquee-wc[data-behavior='alternate'][data-axis='y'] .marquee-track {
+  animation: marquee-wc-alternate-y var(--marquee-duration) ease-in-out infinite alternate;
 }
 
 /* Reverse direction uses CSS animation-direction */
-super-marquee[data-direction='reverse'][data-behavior='loop'] .marquee-track,
-super-marquee[data-direction='reverse'][data-behavior='slide'] .marquee-track {
+marquee-wc[data-direction='reverse'][data-behavior='loop'] .marquee-track,
+marquee-wc[data-direction='reverse'][data-behavior='slide'] .marquee-track {
   animation-direction: reverse;
 }
-super-marquee[data-direction='reverse'][data-behavior='alternate'] .marquee-track {
+marquee-wc[data-direction='reverse'][data-behavior='alternate'] .marquee-track {
   animation-direction: alternate-reverse;
 }
 
 /* ─── Pause states ───────────────────────────────────────────────────── */
 
-super-marquee[data-state='paused'] .marquee-track,
-super-marquee[data-visible='false'] .marquee-track,
-super-marquee[data-tab-visible='false'] .marquee-track {
+marquee-wc[data-state='paused'] .marquee-track,
+marquee-wc[data-visible='false'] .marquee-track,
+marquee-wc[data-tab-visible='false'] .marquee-track {
   animation-play-state: paused;
 }
 
-super-marquee[pause-on-hover]:where(:hover, :focus-within) .marquee-track {
+marquee-wc[pause-on-hover]:where(:hover, :focus-within) .marquee-track {
   animation-play-state: paused;
 }
 
 /* ─── Accessibility: prefers-reduced-motion ──────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  super-marquee:not([reduced-motion='ignore']) .marquee-track {
+  marquee-wc:not([reduced-motion='ignore']) .marquee-track {
     animation: none;
     transform: none;
   }
@@ -202,7 +202,7 @@ super-marquee[pause-on-hover]:where(:hover, :focus-within) .marquee-track {
 
 /* ─── Theme: ticker (compact, monospace, fade edges) ─────────────────── */
 
-super-marquee[theme='ticker'] {
+marquee-wc[theme='ticker'] {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.9rem;
   padding-block: 0.5rem;
@@ -218,7 +218,7 @@ super-marquee[theme='ticker'] {
     transparent 100%
   );
 }
-super-marquee[theme='ticker'] .marquee-item::after {
+marquee-wc[theme='ticker'] .marquee-item::after {
   content: ' •';
   opacity: 0.4;
   margin-inline-start: 1rem;
@@ -226,7 +226,7 @@ super-marquee[theme='ticker'] .marquee-item::after {
 
 /* ─── Theme: breaking-news (red bar + label) ─────────────────────────── */
 
-super-marquee[theme='breaking-news'] {
+marquee-wc[theme='breaking-news'] {
   display: flex;
   align-items: stretch;
   background: var(--marquee-bg, var(--color-error, oklch(50% 0.22 25)));
@@ -235,7 +235,7 @@ super-marquee[theme='breaking-news'] {
   font-weight: 600;
   --marquee-gap: 4rem;
 }
-super-marquee[theme='breaking-news']::before {
+marquee-wc[theme='breaking-news']::before {
   content: var(--marquee-label, 'BREAKING');
   flex-shrink: 0;
   padding: 0.75rem 1rem;
@@ -245,13 +245,13 @@ super-marquee[theme='breaking-news']::before {
   text-transform: uppercase;
   align-content: center;
 }
-super-marquee[theme='breaking-news'] .marquee-viewport {
+marquee-wc[theme='breaking-news'] .marquee-viewport {
   padding-block: 0.75rem;
 }
 
 /* ─── Theme: code-block (monospace, syntax-friendly) ─────────────────── */
 
-super-marquee[theme='code-block'] {
+marquee-wc[theme='code-block'] {
   font-family: var(--font-mono, ui-monospace, monospace);
   background: var(
     --marquee-bg,
@@ -264,13 +264,13 @@ super-marquee[theme='code-block'] {
   font-size: 0.9rem;
   line-height: 1.5;
 }
-super-marquee[theme='code-block'] .marquee-item {
+marquee-wc[theme='code-block'] .marquee-item {
   tab-size: 2;
 }
 
 /* ─── Theme: screen-saver (DVD-bouncing energy, big text, glow) ──────── */
 
-super-marquee[theme='screen-saver'] {
+marquee-wc[theme='screen-saver'] {
   background: var(--marquee-bg, var(--color-background, oklch(15% 0.05 280)));
   color: var(--marquee-fg, var(--color-accent, var(--color-primary, oklch(80% 0.25 320))));
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
@@ -285,7 +285,7 @@ super-marquee[theme='screen-saver'] {
 
 /* ─── Theme: credits (vertical movie-credit roll) ────────────────────── */
 
-super-marquee[theme='credits'] {
+marquee-wc[theme='credits'] {
   background: var(--marquee-bg, black);
   color: var(--marquee-fg, white);
   font-family: var(--font-serif, ui-serif, Georgia, serif);
@@ -301,7 +301,7 @@ super-marquee[theme='credits'] {
     transparent 100%
   );
 }
-super-marquee[theme='credits'] .marquee-item {
+marquee-wc[theme='credits'] .marquee-item {
   white-space: normal;
   padding-inline: 2rem;
   line-height: 1.6;
@@ -309,6 +309,6 @@ super-marquee[theme='credits'] .marquee-item {
 
 /* ─── Hover affordance: subtle cursor hint when pausable ─────────────── */
 
-super-marquee[pause-on-hover] {
+marquee-wc[pause-on-hover] {
   cursor: default;
 }

@@ -1,5 +1,5 @@
 /**
- * @class SuperMarquee
+ * @class MarqueeWc
  * @extends HTMLElement
  * @description Vanilla Breeze marquee component. Modern replacement for the
  *   deprecated <marquee> element. Light DOM, themeable, accessible,
@@ -20,7 +20,7 @@
  * @fires marquee-pause
  * @fires marquee-cycle - fires on each animation iteration
  */
-class SuperMarquee extends HTMLElement {
+class MarqueeWc extends HTMLElement {
   static get observedAttributes() {
     return [
       'direction',
@@ -235,6 +235,6 @@ class SuperMarquee extends HTMLElement {
   }
 }
 
-customElements.define('super-marquee', SuperMarquee);
+customElements.define('marquee-wc', MarqueeWc);
 
-export { SuperMarquee };
+export { MarqueeWc };

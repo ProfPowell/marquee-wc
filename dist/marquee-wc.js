@@ -117,8 +117,8 @@ class h extends HTMLElement {
     this.dispatchEvent(new CustomEvent(t, { bubbles: !0 }));
   }
 }
-customElements.define("super-marquee", h);
+customElements.define("marquee-wc", h);
 export {
-  h as SuperMarquee
+  h as MarqueeWc
 };
-//# sourceMappingURL=super-marquee.js.map
+//# sourceMappingURL=marquee-wc.js.map

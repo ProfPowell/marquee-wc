@@ -1,3 +1,6 @@
 dist/
+docs/marquee-wc.js
+docs/marquee-wc.js.map
+docs/marquee-wc.css
 custom-elements.json
 package-lock.json
