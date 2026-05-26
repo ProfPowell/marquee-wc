@@ -182,26 +182,28 @@ marquee-wc[data-direction='reverse'][data-behavior='alternate'] .marquee-track {
 
 /* ─── Pause states ───────────────────────────────────────────────────── */
 
+/* !important: the per-behavior `animation` shorthand below is more specific
+   and would otherwise reset animation-play-state back to running. */
 marquee-wc[data-state='paused'] :is(.marquee-track, .marquee-char),
 marquee-wc[data-visible='false'] :is(.marquee-track, .marquee-char),
 marquee-wc[data-tab-visible='false'] :is(.marquee-track, .marquee-char) {
-  animation-play-state: paused;
+  animation-play-state: paused !important;
 }
 
 marquee-wc[pause-on-hover]:where(:hover, :focus-within) :is(.marquee-track, .marquee-char) {
-  animation-play-state: paused;
+  animation-play-state: paused !important;
 }
 
 /* ─── Accessibility: prefers-reduced-motion ──────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   marquee-wc:not([reduced-motion='ignore']) .marquee-track {
-    animation: none;
-    transform: none;
+    animation: none !important;
+    transform: none !important;
   }
   /* Letters stop animating but keep any static styling (e.g. ransom tilt). */
   marquee-wc:not([reduced-motion='ignore']) .marquee-char {
-    animation: none;
+    animation: none !important;
   }
 }
 
@@ -396,7 +398,7 @@ marquee-wc[mode='wave'] .marquee-char {
 marquee-wc[mode='march'] .marquee-char {
   animation-name: marquee-wc-march;
   animation-duration: 0.6s;
-  animation-timing-function: steps(1, jump-none);
+  animation-timing-function: step-end;
   --marquee-char-stagger: 0.09s;
 }
 @keyframes marquee-wc-march {
@@ -555,17 +557,15 @@ marquee-wc[mode='leet'] .marquee-char {
    glowing while lit */
 marquee-wc[mode='blink'] .marquee-char {
   display: inline-block;
-  animation: marquee-wc-blink var(--blink-rate, 1s) steps(1, jump-none) infinite;
+  animation: marquee-wc-blink var(--blink-rate, 1s) step-end infinite;
   animation-delay: var(--blink-delay, 0s);
 }
 @keyframes marquee-wc-blink {
-  0%,
-  49% {
+  0% {
     opacity: 1;
     text-shadow: 0 0 0.45em currentColor;
   }
-  50%,
-  100% {
+  50% {
     opacity: 0.12;
     text-shadow: none;
   }
@@ -590,6 +590,23 @@ marquee-wc[mode='chase'] .marquee-char {
     color: var(--color-accent, var(--color-primary, oklch(82% 0.2 90)));
     text-shadow: 0 0 0.55em currentColor;
   }
+}
+
+/* invert — reverse-video chips (text in the page colour on a coloured block)
+   whose hue shifts and ripples across the units (works per letter or per word) */
+marquee-wc[mode='invert'] .marquee-char {
+  display: inline-block;
+  margin-inline: 0.02em;
+  padding: 0.05em 0.12em;
+  border-radius: 0.1em;
+  background: hsl(calc(var(--i, 0) * 26deg) 80% 50%);
+  color: var(--marquee-bg, var(--color-background, oklch(98% 0 0)));
+  animation: marquee-wc-rainbow 2.4s linear infinite;
+  animation-delay: calc(var(--i, 0) * -0.08s);
+}
+marquee-wc[mode='invert'] .marquee-space {
+  background: none;
+  padding-inline: 0;
 }
 
 /* ransom — cut-out magazine letters: random font, tilt, scale, colored chip */

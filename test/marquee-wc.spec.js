@@ -73,10 +73,17 @@ test.describe('Attributes and getters', () => {
 test.describe('Programmatic API', () => {
   test('stop() pauses and start() resumes', async ({ page }) => {
     const el = page.locator('#ctrl');
+    const playState = () =>
+      page.evaluate(
+        () => getComputedStyle(document.querySelector('#ctrl .marquee-track')).animationPlayState
+      );
     await page.evaluate(() => document.getElementById('ctrl').stop());
     await expect(el).toHaveAttribute('data-state', 'paused');
+    // The track animation must actually be paused, not just the attribute.
+    expect(await playState()).toBe('paused');
     await page.evaluate(() => document.getElementById('ctrl').start());
     await expect(el).toHaveAttribute('data-state', 'running');
+    expect(await playState()).toBe('running');
   });
 
   test('toggle() flips play state', async ({ page }) => {

@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] — 2026-05-26
+
+### Fixed
+
+- **Pause never actually paused the animation.** The per-behavior `animation` shorthand was more specific than the pause rules, so its implicit `running` always won — `pause-on-hover`, `stop()`/`play-state="paused"`, off-screen/tab-hidden pausing, and `prefers-reduced-motion` were all effectively no-ops on the moving track. The state/reduced-motion overrides are now `!important` so they win regardless of specificity.
+- **`mode="blink"` did nothing.** The `animation` shorthand contained `steps(1, jump-none)`, which is invalid (jump-none needs ≥2 steps); an invalid value voids the whole shorthand, so the letters never animated. Now uses `step-end`. (`march`'s timing was likewise corrected.)
+
+### Added
+
+- **`unit` attribute** (`letter` | `word`, default `letter`) — any letter-motion mode can now animate **whole words** instead of individual letters.
+- **`invert` mode** — reverse-video chips (text in the page colour on a coloured block) whose hue shifts and ripples across the units; great per word.
+
 ## [1.4.0] — 2026-05-26
 
 ### Added

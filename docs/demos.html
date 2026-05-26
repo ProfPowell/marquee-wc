@@ -375,10 +375,37 @@
             >catch the wave — and around again</marquee-wc
           >
         </div>
+
+        <h3><code>mode="invert"</code> — reverse-video chips, hue-shifting</h3>
+        <div class="demo">
+          <marquee-wc mode="invert" speed="60" pause-on-hover style="font-weight: 700"
+            >read me in reverse video</marquee-wc
+          >
+        </div>
       </section>
 
       <section>
-        <h2>11. <code>mode="dot-matrix"</code> — LED board</h2>
+        <h2>11. <code>unit="word"</code> — animate whole words</h2>
+        <p>
+          Any letter-motion mode can run per <strong>word</strong> instead of per letter — add
+          <code>unit="word"</code>. Here the same effects ripple word-by-word.
+        </p>
+        <h3><code>mode="bounce" unit="word"</code></h3>
+        <div class="demo">
+          <marquee-wc mode="bounce" unit="word" speed="60" pause-on-hover
+            >whole words bounce together now</marquee-wc
+          >
+        </div>
+        <h3><code>mode="invert" unit="word"</code></h3>
+        <div class="demo">
+          <marquee-wc mode="invert" unit="word" speed="60" pause-on-hover style="font-weight: 700"
+            >each word a highlighted block</marquee-wc
+          >
+        </div>
+      </section>
+
+      <section>
+        <h2>12. <code>mode="dot-matrix"</code> — LED board</h2>
         <p>
           Glowing monospace text over a dot grid. The LED color follows <code>--color-accent</code>.
         </p>
