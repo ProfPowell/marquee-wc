@@ -160,16 +160,24 @@
                 <code>dot-matrix</code>. Letter motion: <code>bounce</code> | <code>wave</code> |
                 <code>march</code> | <code>pulse</code> | <code>ransom</code> | <code>pop</code> |
                 <code>spin</code> | <code>rainbow</code> | <code>flip</code> | <code>glitch</code> |
-                <code>leet</code> | <code>blink</code> | <code>chase</code>
+                <code>leet</code> | <code>blink</code> | <code>chase</code> | <code>invert</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>unit</code></td>
+              <td>string</td>
+              <td><code>letter</code></td>
+              <td>
+                <code>letter</code> | <code>word</code> — granularity for the motion modes (animate
+                each letter, or each whole word)
               </td>
             </tr>
           </tbody>
         </table>
         <p>
-          <strong>Letter-motion modes</strong> (<code>bounce</code>, <code>wave</code>,
-          <code>march</code>, <code>pulse</code>, <code>ransom</code>) split the text into
-          per-letter spans and animate each character with a staggered delay. They compose with
-          scrolling and honor <code>prefers-reduced-motion</code>.
+          <strong>Letter-motion modes</strong> split the text into per-unit spans and animate each
+          with a staggered delay. Set <code>unit="word"</code> to animate whole words instead of
+          letters. They compose with scrolling and honor <code>prefers-reduced-motion</code>.
         </p>
       </section>
 

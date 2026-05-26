@@ -34,7 +34,11 @@ export type MarqueeMode =
   | 'glitch'
   | 'leet'
   | 'blink'
-  | 'chase';
+  | 'chase'
+  | 'invert';
+
+/** Granularity for the per-unit motion modes. */
+export type MarqueeUnit = 'letter' | 'word';
 
 export interface MarqueeWcEventMap {
   'marquee-start': CustomEvent<void>;
@@ -63,6 +67,8 @@ export declare class MarqueeWc extends HTMLElement {
   get isReverse(): boolean;
   /** Active visual/motion preset. Attribute: `mode`. Default `''` (none). */
   get mode(): MarqueeMode;
+  /** Granularity for the motion modes. Attribute: `unit`. Default `letter`. */
+  get unit(): MarqueeUnit;
 
   /** Start the marquee (sets `play-state="running"`). */
   start(): void;

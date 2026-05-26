@@ -15,16 +15,17 @@
  * @attr fade - boolean or length for edge mask
  * @attr reduced-motion - respect | ignore  (default: respect)
  * @attr mode - visual/motion preset. Surface themes: ticker | breaking-news |
- *   code-block | screen-saver | credits | dot-matrix. Per-letter motion:
+ *   code-block | screen-saver | credits | dot-matrix. Per-unit motion:
  *   bounce | wave | march | pulse | ransom | pop | spin | rainbow | flip |
- *   glitch | leet | blink | chase.
+ *   glitch | leet | blink | chase | invert.
+ * @attr unit - letter | word  (default: letter) — granularity for the motion modes
  *
  * @fires marquee-start
  * @fires marquee-pause
  * @fires marquee-cycle - fires on each animation iteration
  */
 
-// Modes that split text into per-character spans for letter-level effects.
+// Modes that split text into per-unit spans for letter/word-level effects.
 const LETTER_MODES = [
   'bounce',
   'wave',
@@ -39,6 +40,7 @@ const LETTER_MODES = [
   'leet',
   'blink',
   'chase',
+  'invert',
 ];
 
 class MarqueeWc extends HTMLElement {
@@ -54,6 +56,7 @@ class MarqueeWc extends HTMLElement {
       'autofill',
       'reduced-motion',
       'mode',
+      'unit',
     ];
   }
 
@@ -78,6 +81,9 @@ class MarqueeWc extends HTMLElement {
   }
   get mode() {
     return this.getAttribute('mode') || '';
+  }
+  get unit() {
+    return this.getAttribute('unit') === 'word' ? 'word' : 'letter';
   }
   get axis() {
     return ['up', 'down'].includes(this.direction) ? 'y' : 'x';
@@ -105,7 +111,7 @@ class MarqueeWc extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue === newValue || !this._built) return;
-    if (name === 'mode') this._renderContent();
+    if (name === 'mode' || name === 'unit') this._renderContent();
     this._update();
     if (name === 'play-state') {
       this._dispatch(newValue === 'paused' ? 'marquee-pause' : 'marquee-start');
@@ -168,14 +174,19 @@ class MarqueeWc extends HTMLElement {
     const textNodes = [];
     while (walker.nextNode()) textNodes.push(walker.currentNode);
 
+    const byWord = this.unit === 'word';
     const ransom = this.mode === 'ransom';
     const pop = this.mode === 'pop';
     const leet = this.mode === 'leet';
     const blink = this.mode === 'blink';
+    const isWs = (c) => c.trim() === '';
     let i = 0;
     for (const node of textNodes) {
       const frag = document.createDocumentFragment();
-      for (const ch of node.textContent) {
+      const tokens = byWord ? this._tokenizeWords(node.textContent) : [...node.textContent];
+      for (const ch of tokens) {
+        if (ch === '') continue;
+        const space = isWs(ch);
         const span = document.createElement('span');
         span.className = 'marquee-char';
         span.style.setProperty('--i', i++);
@@ -186,19 +197,37 @@ class MarqueeWc extends HTMLElement {
           span.style.setProperty('--blink-rate', `${(0.4 + Math.random() * 1.5).toFixed(2)}s`);
           span.style.setProperty('--blink-delay', `${Math.random().toFixed(2)}s`);
         }
-        if (ch === ' ' || ch === '\n' || ch === '\t') {
+        if (space) {
           span.classList.add('marquee-space');
           span.textContent = ' ';
         } else {
           span.textContent = ch;
           if (ransom) this._ransomize(span);
-          if (leet) this._leetify(span, ch);
+          if (leet) this._leetify(span);
         }
         frag.appendChild(span);
       }
       node.replaceWith(frag);
     }
     this._original.style.setProperty('--n', i);
+  }
+
+  // Split text into word and whitespace-run tokens (no regex escapes needed).
+  _tokenizeWords(text) {
+    const tokens = [];
+    let buf = '';
+    let bufWs = null;
+    for (const c of text) {
+      const ws = c.trim() === '';
+      if (buf !== '' && ws !== bufWs) {
+        tokens.push(buf);
+        buf = '';
+      }
+      buf += c;
+      bufWs = ws;
+    }
+    if (buf !== '') tokens.push(buf);
+    return tokens;
   }
 
   // Give a single ransom-note letter a random font, tilt, scale, and chip color.
@@ -225,10 +254,9 @@ class MarqueeWc extends HTMLElement {
 
   // Substitute a letter with its l33t equivalent and, at random, mirror it or
   // flip it upside-down — for that glitchy h4x0r chaos.
-  _leetify(span, ch) {
+  _leetify(span) {
     const leet = { a: '4', b: '8', e: '3', g: '9', i: '1', l: '1', o: '0', s: '5', t: '7', z: '2' };
-    const sub = leet[ch.toLowerCase()];
-    if (sub) span.textContent = sub;
+    span.textContent = [...span.textContent].map((c) => leet[c.toLowerCase()] || c).join('');
     const r = Math.random();
     if (r < 0.16)
       span.style.setProperty('--flip', 'scaleX(-1)'); // reversed
