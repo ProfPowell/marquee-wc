@@ -43,6 +43,11 @@
             },
             {
               "kind": "field",
+              "name": "mode",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "axis",
               "readonly": true
             },
@@ -70,6 +75,23 @@
             {
               "kind": "method",
               "name": "_build"
+            },
+            {
+              "kind": "method",
+              "name": "_renderContent"
+            },
+            {
+              "kind": "method",
+              "name": "_splitLetters"
+            },
+            {
+              "kind": "method",
+              "name": "_ransomize",
+              "parameters": [
+                {
+                  "name": "span"
+                }
+              ]
             },
             {
               "kind": "method",
@@ -107,58 +129,38 @@
               "type": {
                 "text": "CustomEvent"
               }
-            },
-            {
-              "name": "marquee-start"
-            },
-            {
-              "name": "marquee-pause"
-            },
-            {
-              "description": "fires on each animation iteration",
-              "name": "marquee-cycle"
             }
           ],
           "attributes": [
             {
-              "name": "direction",
-              "description": "left | right | up | down  (default: left)"
+              "name": "direction"
             },
             {
-              "name": "speed",
-              "description": "number, pixels per second  (default: 50)"
+              "name": "speed"
             },
             {
-              "name": "behavior",
-              "description": "loop | slide | alternate  (default: loop)"
+              "name": "behavior"
             },
             {
-              "name": "gap",
-              "description": "CSS length between repeats  (default: 2rem)"
+              "name": "gap"
             },
             {
-              "name": "play-state",
-              "description": "running | paused"
+              "name": "play-state"
             },
             {
-              "name": "pause-on-hover",
-              "description": "boolean; also pauses on focus-within"
+              "name": "pause-on-hover"
             },
             {
-              "name": "fade",
-              "description": "boolean or length for edge mask"
+              "name": "fade"
             },
             {
-              "name": "autofill",
-              "description": "boolean (default true)"
+              "name": "autofill"
             },
             {
-              "name": "reduced-motion",
-              "description": "respect | ignore  (default: respect)"
+              "name": "reduced-motion"
             },
             {
-              "name": "theme",
-              "description": "ticker | breaking-news | code-block | screen-saver | credits"
+              "name": "mode"
             }
           ],
           "superclass": {

@@ -18,6 +18,7 @@ export default [
         getComputedStyle: 'readonly',
         ResizeObserver: 'readonly',
         IntersectionObserver: 'readonly',
+        NodeFilter: 'readonly',
       },
     },
     rules: {

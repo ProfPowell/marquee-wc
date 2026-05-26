@@ -123,6 +123,33 @@ test.describe('Autofill clones', () => {
   });
 });
 
+test.describe('Letter modes', () => {
+  test('mode="bounce" splits text into staggered .marquee-char spans', async ({ page }) => {
+    const chars = page.locator('#bounce .marquee-item').first().locator('.marquee-char');
+    await expect(chars.first()).toBeVisible();
+    const count = await chars.count();
+    expect(count).toBe('Bouncing letters'.length);
+
+    // Each char carries a stagger index, and the animation actually runs.
+    const info = await chars.first().evaluate((el) => ({
+      i: getComputedStyle(el).getPropertyValue('--i').trim(),
+      animation: getComputedStyle(el).animationName,
+    }));
+    expect(info.i).toBe('0');
+    expect(info.animation).toBe('marquee-wc-bounce');
+  });
+
+  test('switching mode away from a letter mode removes the char spans', async ({ page }) => {
+    await page.evaluate(() => document.getElementById('bounce').setAttribute('mode', 'ticker'));
+    const count = await page
+      .locator('#bounce .marquee-item')
+      .first()
+      .locator('.marquee-char')
+      .count();
+    expect(count).toBe(0);
+  });
+});
+
 test.describe('Accessibility', () => {
   test('respects reduced motion preference (animation disabled)', async ({ browser }) => {
     const context = await browser.newContext({ reducedMotion: 'reduce' });
