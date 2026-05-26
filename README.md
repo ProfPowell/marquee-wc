@@ -86,22 +86,23 @@ These split the text into per-unit spans and animate each one with a staggered
 delay, so the effect ripples across the text. With `unit="word"` the units are
 whole words. They compose with scrolling and honor `prefers-reduced-motion`.
 
-| Mode      | Description                                                       |
-| --------- | ----------------------------------------------------------------- |
-| `bounce`  | Letters hop up and back down                                      |
-| `wave`    | Roller-coaster: letters ride a tall sinusoidal wave               |
-| `march`   | Letters step up and down like a marching band                     |
-| `pulse`   | Letters grow and shrink in a travelling swell                     |
-| `ransom`  | Cut-out magazine letters — random font, tilt, and chip color      |
-| `pop`     | Letters balloon and burst at random, like little explosions       |
-| `spin`    | Letters cartwheel around in a rolling stagger                     |
-| `rainbow` | A flowing spectrum that ripples across the letters                |
-| `flip`    | Split-flap board — letters tumble on the X axis                   |
-| `glitch`  | Jittery skew with a chromatic-aberration shadow                   |
-| `leet`    | l33t-speak substitution, random mirrored/flipped letters, flicker |
-| `blink`   | Each unit blinks independently at its own rate, glowing when lit  |
-| `chase`   | A stadium-wave / theater-marquee light sweeps unit-to-unit        |
-| `invert`  | Reverse-video chips whose hue shifts and ripples across the units |
+| Mode      | Description                                                        |
+| --------- | ------------------------------------------------------------------ |
+| `bounce`  | Letters hop up and back down                                       |
+| `wave`    | Roller-coaster: letters ride a tall sinusoidal wave                |
+| `march`   | Letters step up and down like a marching band                      |
+| `pulse`   | Letters grow and shrink in a travelling swell                      |
+| `ransom`  | Cut-out magazine letters — random font, tilt, and chip color       |
+| `pop`     | Letters balloon and burst at random, like little explosions        |
+| `spin`    | Letters cartwheel around in a rolling stagger                      |
+| `rainbow` | A flowing spectrum that ripples across the letters                 |
+| `flip`    | Split-flap board — letters tumble on the X axis                    |
+| `glitch`  | Jittery skew with a chromatic-aberration shadow                    |
+| `leet`    | l33t-speak substitution, random mirrored/flipped letters, flicker  |
+| `blink`   | Each unit blinks independently at its own rate, glowing when lit   |
+| `chase`   | A stadium-wave / theater-marquee light sweeps unit-to-unit         |
+| `invert`  | Reverse-video chips whose hue shifts and ripples across the units  |
+| `decode`  | Units scramble through random glyphs, then lock onto the real text |
 
 ## API
 

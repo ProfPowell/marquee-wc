@@ -17,7 +17,7 @@
  * @attr mode - visual/motion preset. Surface themes: ticker | breaking-news |
  *   code-block | screen-saver | credits | dot-matrix. Per-unit motion:
  *   bounce | wave | march | pulse | ransom | pop | spin | rainbow | flip |
- *   glitch | leet | blink | chase | invert.
+ *   glitch | leet | blink | chase | invert | decode.
  * @attr unit - letter | word  (default: letter) — granularity for the motion modes
  *
  * @fires marquee-start
@@ -41,6 +41,7 @@ const LETTER_MODES = [
   'blink',
   'chase',
   'invert',
+  'decode',
 ];
 
 class MarqueeWc extends HTMLElement {
@@ -107,6 +108,7 @@ class MarqueeWc extends HTMLElement {
     this._intersectionObserver?.disconnect();
     this._track?.removeEventListener('animationiteration', this._onIteration);
     document.removeEventListener('visibilitychange', this._onVisibility);
+    this._stopScramble();
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -179,6 +181,7 @@ class MarqueeWc extends HTMLElement {
     const pop = this.mode === 'pop';
     const leet = this.mode === 'leet';
     const blink = this.mode === 'blink';
+    const decode = this.mode === 'decode';
     const isWs = (c) => c.trim() === '';
     let i = 0;
     for (const node of textNodes) {
@@ -204,6 +207,8 @@ class MarqueeWc extends HTMLElement {
           span.textContent = ch;
           if (ransom) this._ransomize(span);
           if (leet) this._leetify(span);
+          // decode: remember the real text so the scramble loop can settle on it
+          if (decode) span.dataset.ch = ch;
         }
         frag.appendChild(span);
       }
@@ -263,6 +268,87 @@ class MarqueeWc extends HTMLElement {
     else if (r < 0.27)
       span.style.setProperty('--flip', 'scaleY(-1)'); // upside-down
     else if (r < 0.35) span.style.setProperty('--flip', 'rotate(180deg)');
+  }
+
+  // Whether playback is currently paused (state, off-screen, tab-hidden, or hover).
+  _isPaused() {
+    if (this.hasAttribute('pause-on-hover') && this.matches(':hover, :focus-within')) return true;
+    return (
+      this.playState === 'paused' ||
+      this.dataset.visible === 'false' ||
+      this.dataset.tabVisible === 'false'
+    );
+  }
+
+  _stopScramble() {
+    if (this._scrambleRAF) cancelAnimationFrame(this._scrambleRAF);
+    this._scrambleRAF = null;
+  }
+
+  // decode mode: each unit cycles random glyphs, then locks onto its real text
+  // (stored in data-ch), staggered by --i, then re-scrambles on a loop.
+  _syncScramble() {
+    this._stopScramble();
+    if (this.mode !== 'decode') return;
+
+    const units = [...this.querySelectorAll('.marquee-char')].filter(
+      (s) => !s.classList.contains('marquee-space') && s.dataset.ch != null
+    );
+    if (units.length === 0) return;
+
+    // Respect reduced motion: show the real text, no scrambling.
+    const reduce =
+      this.getAttribute('reduced-motion') !== 'ignore' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      for (const s of units) s.textContent = s.dataset.ch;
+      return;
+    }
+
+    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=?<>/~^|';
+    const randStr = (n) => {
+      let out = '';
+      for (let k = 0; k < n; k++) out += GLYPHS[(Math.random() * GLYPHS.length) | 0];
+      return out;
+    };
+
+    const SCRAMBLE_MS = 650;
+    const STAGGER_MS = 45;
+    const HOLD_MS = 1800;
+    const FLIP_MS = 55;
+    let maxSettle = 0;
+    const items = units.map((s) => {
+      const i = Number(s.style.getPropertyValue('--i')) || 0;
+      const settleAt = SCRAMBLE_MS + i * STAGGER_MS;
+      if (settleAt > maxSettle) maxSettle = settleAt;
+      return { s, settleAt, target: s.dataset.ch };
+    });
+
+    let elapsed = 0;
+    let lastT = null;
+    let lastFlip = 0;
+    const tick = (t) => {
+      this._scrambleRAF = requestAnimationFrame(tick);
+      if (lastT == null) lastT = t;
+      const dt = t - lastT;
+      lastT = t;
+      if (this._isPaused()) return; // freeze the timeline while paused
+      elapsed += dt;
+      const flip = elapsed - lastFlip >= FLIP_MS;
+      if (flip) lastFlip = elapsed;
+      for (const it of items) {
+        if (elapsed >= it.settleAt) {
+          if (it.s.textContent !== it.target) it.s.textContent = it.target;
+        } else if (flip) {
+          it.s.textContent = randStr(it.target.length);
+        }
+      }
+      if (elapsed > maxSettle + HOLD_MS) {
+        elapsed = 0;
+        lastFlip = 0;
+      }
+    };
+    this._scrambleRAF = requestAnimationFrame(tick);
   }
 
   _observe() {
@@ -367,6 +453,8 @@ class MarqueeWc extends HTMLElement {
     this.style.setProperty('--marquee-cycle-distance', `${scrollDistance}px`);
     this.style.setProperty('--marquee-alternate-distance', `${alternateEnd}px`);
     this.style.setProperty('--marquee-viewport-size', `${viewportSize}px`);
+
+    this._syncScramble();
   }
 
   _resolveGapPx() {
