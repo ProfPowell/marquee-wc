@@ -14,6 +14,7 @@
  * @attr autofill - boolean (default true)
  * @attr fade - boolean or length for edge mask
  * @attr reduced-motion - respect | ignore  (default: respect)
+ * @attr theme - ticker | breaking-news | code-block | screen-saver | credits
  *
  * @fires marquee-start
  * @fires marquee-pause
@@ -22,21 +23,44 @@
 class SuperMarquee extends HTMLElement {
   static get observedAttributes() {
     return [
-      'direction', 'speed', 'behavior', 'gap',
-      'play-state', 'pause-on-hover', 'fade',
-      'autofill', 'reduced-motion'
+      'direction',
+      'speed',
+      'behavior',
+      'gap',
+      'play-state',
+      'pause-on-hover',
+      'fade',
+      'autofill',
+      'reduced-motion',
+      'theme',
     ];
   }
 
   // ── Functional core: pure getters ──────────────────────────────────────
-  get direction()    { return this.getAttribute('direction') || 'left'; }
-  get speed()        { return Number(this.getAttribute('speed')) || 50; }
-  get behavior()     { return this.getAttribute('behavior') || 'loop'; }
-  get gap()          { return this.getAttribute('gap') || '2rem'; }
-  get playState()    { return this.getAttribute('play-state') || 'running'; }
-  get autofill()     { return this.getAttribute('autofill') !== 'false'; }
-  get axis()         { return ['up', 'down'].includes(this.direction) ? 'y' : 'x'; }
-  get isReverse()    { return ['right', 'down'].includes(this.direction); }
+  get direction() {
+    return this.getAttribute('direction') || 'left';
+  }
+  get speed() {
+    return Number(this.getAttribute('speed')) || 50;
+  }
+  get behavior() {
+    return this.getAttribute('behavior') || 'loop';
+  }
+  get gap() {
+    return this.getAttribute('gap') || '2rem';
+  }
+  get playState() {
+    return this.getAttribute('play-state') || 'running';
+  }
+  get autofill() {
+    return this.getAttribute('autofill') !== 'false';
+  }
+  get axis() {
+    return ['up', 'down'].includes(this.direction) ? 'y' : 'x';
+  }
+  get isReverse() {
+    return ['right', 'down'].includes(this.direction);
+  }
 
   // ── Imperative shell ───────────────────────────────────────────────────
   connectedCallback() {
@@ -64,10 +88,18 @@ class SuperMarquee extends HTMLElement {
   }
 
   // ── Public API (legacy <marquee> compat) ───────────────────────────────
-  start()   { this.setAttribute('play-state', 'running'); }
-  stop()    { this.setAttribute('play-state', 'paused'); }
-  toggle()  { this.playState === 'paused' ? this.start() : this.stop(); }
-  refresh() { this._update(); }
+  start() {
+    this.setAttribute('play-state', 'running');
+  }
+  stop() {
+    this.setAttribute('play-state', 'paused');
+  }
+  toggle() {
+    this.playState === 'paused' ? this.start() : this.stop();
+  }
+  refresh() {
+    this._update();
+  }
 
   // ── Private ────────────────────────────────────────────────────────────
   _build() {
@@ -82,7 +114,7 @@ class SuperMarquee extends HTMLElement {
 
     const original = document.createElement('div');
     original.className = 'marquee-item';
-    items.forEach(n => original.appendChild(n));
+    items.forEach((n) => original.appendChild(n));
 
     track.appendChild(original);
     viewport.appendChild(track);
@@ -99,9 +131,10 @@ class SuperMarquee extends HTMLElement {
     this._resizeObserver.observe(this._original);
 
     this._intersectionObserver = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        this.dataset.visible = String(e.isIntersecting);
-      }),
+      (entries) =>
+        entries.forEach((e) => {
+          this.dataset.visible = String(e.isIntersecting);
+        }),
       { rootMargin: '100px' }
     );
     this._intersectionObserver.observe(this);
@@ -127,7 +160,7 @@ class SuperMarquee extends HTMLElement {
     clone.setAttribute('aria-hidden', 'true');
     clone.dataset.clone = '';
     // strip ids — they'd duplicate
-    clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
     // remove from tab order & semantic flow
     clone.setAttribute('inert', '');
     return clone;
@@ -146,12 +179,8 @@ class SuperMarquee extends HTMLElement {
     this._clearClones();
 
     const isHorizontal = this.axis === 'x';
-    const viewportSize = isHorizontal
-      ? this._viewport.offsetWidth
-      : this._viewport.offsetHeight;
-    const itemSize = isHorizontal
-      ? this._original.offsetWidth
-      : this._original.offsetHeight;
+    const viewportSize = isHorizontal ? this._viewport.offsetWidth : this._viewport.offsetHeight;
+    const itemSize = isHorizontal ? this._original.offsetWidth : this._original.offsetHeight;
 
     if (itemSize === 0 || viewportSize === 0) return;
 
@@ -176,10 +205,11 @@ class SuperMarquee extends HTMLElement {
     // Compute scroll distance and duration for constant velocity
     let scrollDistance;
     if (this.behavior === 'loop') {
-      scrollDistance = itemSize + gapPx;             // one cycle = one item
+      scrollDistance = itemSize + gapPx; // one cycle = one item
     } else if (this.behavior === 'alternate') {
       scrollDistance = Math.max(0, itemSize - viewportSize);
-    } else { // slide
+    } else {
+      // slide
       scrollDistance = itemSize;
     }
 

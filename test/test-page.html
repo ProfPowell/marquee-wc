@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>&lt;super-marquee&gt; — test harness</title>
+    <link rel="stylesheet" href="../src/super-marquee.css" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 2rem;
+        line-height: 1.5;
+      }
+      section {
+        margin-block: 2rem;
+      }
+      .box {
+        height: 8rem;
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>super-marquee test harness</h1>
+
+    <section>
+      <h2>Default (loop, left)</h2>
+      <super-marquee id="default" speed="100">
+        Hello from the default marquee. The old tag, reborn.
+      </super-marquee>
+    </section>
+
+    <section>
+      <h2>Ticker theme</h2>
+      <super-marquee id="ticker" theme="ticker" speed="80" pause-on-hover fade>
+        <span>AAPL ▲ 178.42</span>
+        <span>MSFT ▲ 412.18</span>
+        <span>GOOG ▼ 138.21</span>
+      </super-marquee>
+    </section>
+
+    <section>
+      <h2>Slide behavior</h2>
+      <super-marquee id="slide" behavior="slide" speed="120"> Sliding in once. </super-marquee>
+    </section>
+
+    <section>
+      <h2>Vertical (up)</h2>
+      <super-marquee id="vertical" direction="up" speed="40" class="box">
+        <div>
+          <p>Line one</p>
+          <p>Line two</p>
+          <p>Line three</p>
+        </div>
+      </super-marquee>
+    </section>
+
+    <section>
+      <h2>Controls</h2>
+      <super-marquee id="ctrl" speed="100"> Controllable marquee. </super-marquee>
+      <button id="btn-start">start</button>
+      <button id="btn-stop">stop</button>
+      <button id="btn-toggle">toggle</button>
+    </section>
+
+    <script type="module" src="../src/super-marquee.js"></script>
+    <script type="module">
+      const ctrl = document.getElementById('ctrl');
+      document.getElementById('btn-start').addEventListener('click', () => ctrl.start());
+      document.getElementById('btn-stop').addEventListener('click', () => ctrl.stop());
+      document.getElementById('btn-toggle').addEventListener('click', () => ctrl.toggle());
+    </script>
+  </body>
+</html>
