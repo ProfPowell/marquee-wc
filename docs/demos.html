@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230a66c2'/%3E%3Cpath d='M3 6h8M3 9.5h6' stroke='white' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
     <title>Demos — marquee-wc</title>
 
     <link
@@ -10,10 +14,21 @@
       href="https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn/vanilla-breeze.css"
     />
     <script>
-      // Point Vanilla Breeze's theme-picker at the CDN so per-brand theme
-      // stylesheets load (otherwise it falls back to "/cdn" and they 404 here).
+      // Vanilla Breeze theme-picker base. Also shim its hardcoded /cdn/* fetches
+      // (e.g. themes/manifest.json) onto the CDN so they resolve on GitHub Pages.
       window.__VB_THEME_BASE =
         'https://cdn.jsdelivr.net/gh/profpowell/vanilla-breeze@main/dist/cdn';
+      (function () {
+        const CDN = window.__VB_THEME_BASE;
+        const origFetch = window.fetch.bind(window);
+        window.fetch = (input, init) => {
+          const url = typeof input === 'string' ? input : input && input.url;
+          if (typeof url === 'string' && url.startsWith('/cdn/')) {
+            return origFetch(CDN + url.slice(4), init);
+          }
+          return origFetch(input, init);
+        };
+      })();
     </script>
     <script
       type="module"
@@ -300,6 +315,25 @@
         <h3><code>mode="ransom"</code> — cut-out magazine letters</h3>
         <div class="demo">
           <marquee-wc mode="ransom" speed="50" pause-on-hover>pay no attention</marquee-wc>
+        </div>
+
+        <h3><code>mode="pop"</code> — letters explode here and there</h3>
+        <div class="demo">
+          <marquee-wc mode="pop" speed="60" pause-on-hover
+            >boom · pow · bang · zap · kapow</marquee-wc
+          >
+        </div>
+      </section>
+
+      <section>
+        <h2>11. <code>mode="dot-matrix"</code> — LED board</h2>
+        <p>
+          Glowing monospace text over a dot grid. The LED color follows <code>--color-accent</code>.
+        </p>
+        <div class="demo">
+          <marquee-wc mode="dot-matrix" speed="70" pause-on-hover>
+            ARRIVALS · GATE 12 · 14:05 · NOW BOARDING ·
+          </marquee-wc>
         </div>
       </section>
     </main>

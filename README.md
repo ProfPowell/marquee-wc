@@ -76,6 +76,7 @@ The `mode` attribute selects a preset. **Surface themes** style the container;
 | `code-block`    | Monospace surface for long lines of code, logs, or terminal output |
 | `screen-saver`  | Big glowing text — pair with `behavior="alternate"`                |
 | `credits`       | Vertical movie-credit roll — pair with `direction="up"`            |
+| `dot-matrix`    | Glowing monospace LED board over a dot grid (LED color = accent)   |
 
 ### Letter-motion modes
 
@@ -90,6 +91,7 @@ scrolling and honor `prefers-reduced-motion`.
 | `march`  | Letters step up and down like a marching band                |
 | `pulse`  | Letters grow and shrink in a travelling swell                |
 | `ransom` | Cut-out magazine letters — random font, tilt, and chip color |
+| `pop`    | Letters balloon and burst at random, like little explosions  |
 
 ## API
 

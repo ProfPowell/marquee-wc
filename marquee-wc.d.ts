@@ -21,11 +21,13 @@ export type MarqueeMode =
   | 'code-block'
   | 'screen-saver'
   | 'credits'
+  | 'dot-matrix'
   | 'bounce'
   | 'wave'
   | 'march'
   | 'pulse'
-  | 'ransom';
+  | 'ransom'
+  | 'pop';
 
 export interface MarqueeWcEventMap {
   'marquee-start': CustomEvent<void>;

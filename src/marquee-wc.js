@@ -15,8 +15,8 @@
  * @attr fade - boolean or length for edge mask
  * @attr reduced-motion - respect | ignore  (default: respect)
  * @attr mode - visual/motion preset. Surface themes: ticker | breaking-news |
- *   code-block | screen-saver | credits. Per-letter motion: bounce | wave |
- *   march | pulse | ransom.
+ *   code-block | screen-saver | credits | dot-matrix. Per-letter motion:
+ *   bounce | wave | march | pulse | ransom | pop.
  *
  * @fires marquee-start
  * @fires marquee-pause
@@ -24,7 +24,7 @@
  */
 
 // Modes that split text into per-character spans for letter-level effects.
-const LETTER_MODES = ['bounce', 'wave', 'march', 'pulse', 'ransom'];
+const LETTER_MODES = ['bounce', 'wave', 'march', 'pulse', 'ransom', 'pop'];
 
 class MarqueeWc extends HTMLElement {
   static get observedAttributes() {
@@ -154,6 +154,7 @@ class MarqueeWc extends HTMLElement {
     while (walker.nextNode()) textNodes.push(walker.currentNode);
 
     const ransom = this.mode === 'ransom';
+    const pop = this.mode === 'pop';
     let i = 0;
     for (const node of textNodes) {
       const frag = document.createDocumentFragment();
@@ -161,6 +162,8 @@ class MarqueeWc extends HTMLElement {
         const span = document.createElement('span');
         span.className = 'marquee-char';
         span.style.setProperty('--i', i++);
+        // pop fires letters at random times so the bursts scatter "here and there"
+        if (pop) span.style.setProperty('--delay', `${(Math.random() * 2.6).toFixed(2)}s`);
         if (ch === ' ' || ch === '\n' || ch === '\t') {
           span.classList.add('marquee-space');
           span.textContent = ' ';

@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-05-26
+
+### Added
+
+- **`pop` mode** — letters balloon and burst at random intervals, like little explosions (per-letter, randomized delays).
+- **`dot-matrix` mode** — a glowing monospace LED board over a dot grid; the LED color follows `--color-accent`.
+- The docs site now renders its code samples with the sibling `<code-block>` component.
+
+### Fixed
+
+- Silenced the docs-site console 404s: added a favicon, and a small `fetch` shim that rewrites the theme-picker's hardcoded `/cdn/*` requests (e.g. `themes/manifest.json`) onto the Vanilla Breeze CDN.
+
 ## [1.1.0] — 2026-05-26
 
 ### Changed

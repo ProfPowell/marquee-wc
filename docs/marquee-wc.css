@@ -311,6 +311,28 @@ marquee-wc[mode='credits'] .marquee-item {
   line-height: 1.6;
 }
 
+/* ─── Theme: dot-matrix (glowing LED board over a dot grid) ───────────── */
+
+marquee-wc[mode='dot-matrix'] {
+  --_led: var(--marquee-fg, var(--color-accent, oklch(82% 0.18 90)));
+  background-color: var(--marquee-bg, var(--color-background, oklch(16% 0.02 250)));
+  color: var(--_led);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding-block: 0.75rem;
+  text-shadow:
+    0 0 0.35em currentColor,
+    0 0 0.7em currentColor;
+  /* faint LED dot grid behind the text */
+  background-image: radial-gradient(
+    color-mix(in oklch, currentColor 22%, transparent) 30%,
+    transparent 32%
+  );
+  background-size: 0.42em 0.42em;
+}
+
 /* ─── Hover affordance: subtle cursor hint when pausable ─────────────── */
 
 marquee-wc[pause-on-hover] {
@@ -402,6 +424,30 @@ marquee-wc[mode='pulse'] .marquee-char {
   }
   50% {
     transform: scale(1.45);
+  }
+}
+
+/* pop — letters balloon and burst at random, like little explosions */
+marquee-wc[mode='pop'] .marquee-char {
+  display: inline-block;
+  transform-origin: center;
+  animation: marquee-wc-pop 2.8s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+@keyframes marquee-wc-pop {
+  0%,
+  68%,
+  100% {
+    transform: scale(1);
+  }
+  76% {
+    transform: scale(2.6) rotate(-5deg);
+    color: var(--color-accent, var(--color-primary, oklch(70% 0.2 30)));
+    text-shadow: 0 0 0.5em currentColor;
+  }
+  84% {
+    transform: scale(0.9) rotate(2deg);
   }
 }
 
